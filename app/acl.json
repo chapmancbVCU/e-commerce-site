@@ -16,5 +16,10 @@
     "Admin" : {
         "denied" : {},
         "Admindashboard" : ["*"]
+    },
+    "VendorAdmin" : {
+        "denied" : {},
+        "Adashboard" : ["*"],
+        "Aproducts" : ["*"]
     }
 }
