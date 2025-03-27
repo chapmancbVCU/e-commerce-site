@@ -3,7 +3,7 @@ namespace App\Controllers;
 use Core\Controller;
 
 /**
- * Undocumented class
+ * Vendor products controller
  */
 class VendorproductsController extends Controller {
     /**

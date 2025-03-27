@@ -3,7 +3,7 @@ namespace App\Controllers;
 use Core\Controller;
 
 /**
- * Undocumented class
+ * Vendor dashboard controller
  */
 class VendordashboardController extends Controller {
     /**
