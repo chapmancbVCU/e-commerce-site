@@ -19,7 +19,7 @@
     },
     "VendorAdmin" : {
         "denied" : {},
-        "Adashboard" : ["*"],
-        "Aproducts" : ["*"]
+        "Vendordashboard" : ["*"],
+        "Vendorproducts" : ["*"]
     }
 }

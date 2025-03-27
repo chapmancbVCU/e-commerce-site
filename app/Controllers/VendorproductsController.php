@@ -5,7 +5,7 @@ use Core\Controller;
 /**
  * Undocumented class
  */
-class AdashboardController extends Controller {
+class VendorproductsController extends Controller {
     /**
      * Runs when the object is constructed.
      *
