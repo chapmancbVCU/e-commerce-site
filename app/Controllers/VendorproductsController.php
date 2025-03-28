@@ -23,6 +23,8 @@ class VendorproductsController extends Controller {
 
     public function addAction() {
         $product = new Products();
+
+        $this->view->product = $product;
         $this->view->displayErrors = [];
         $this->view->postAction = Env::get('APP_DOMAIN', '/').'vendorProducts/add';
         $this->view->render('vendorproducts/add');
