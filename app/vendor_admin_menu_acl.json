@@ -1,5 +1,6 @@
 
 {
+    "Visit Site" : "home",
     "Vendor Dashboard" : "vendordashboard/index",
     "Products" : {
         "View Products" : "vendorproducts/index",
