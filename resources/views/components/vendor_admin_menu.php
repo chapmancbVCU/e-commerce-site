@@ -3,7 +3,7 @@ use Core\Router;
 use Core\Helper;
 use Core\Lib\Utilities\Env;
 $profileImage = Helper::getProfileImage();
-$menu = Router::getMenu('vendor_admin_menu.php_menu_acl');
+$menu = Router::getMenu('vendor_admin_menu_acl');
 $userMenu = Router::getMenu('user_menu');
 ?>
 <nav class="navbar navbar-expand-lg bg-dark bg-gradient sticky-top mb-5">
