@@ -8,5 +8,5 @@
 
 <!-- Body content between these two function calls. -->
 <?php $this->start('body'); ?>
-
+Vendor products
 <?php $this->end(); ?>
