@@ -1,5 +1,9 @@
 
 {
-    "Home" : "home",
-    "Vendor_admin" : ""     
+    "Vendor Dashboard" : "vendordashboard/index",
+    "Products" : {
+        "View Products" : "vendorproducts/index",
+        "separator" : "",
+        "Add Product" : "vendorproducts/add"
+    }
 }      
