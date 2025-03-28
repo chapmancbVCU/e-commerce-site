@@ -11,7 +11,7 @@
 <h1 class="text-center">Add New Product</h1>
 <div class="row">
     <div class="col-md-10 offset-md-1 bg-light">
-        <?php $this->component('add_product') ?>
+        <?php $this->component('product_form') ?>
     </div>
 </div>
 <?php $this->end(); ?>

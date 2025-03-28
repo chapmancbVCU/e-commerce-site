@@ -137,16 +137,16 @@
         },
         {
             "name": "chappy-php/chappy-php-framework",
-            "version": "v1.0.12",
+            "version": "v1.0.13",
             "source": {
                 "type": "git",
                 "url": "https://github.com/chapmancbVCU/chappy-php-framework.git",
-                "reference": "631dbb604004f3470462d9362bcf0d8aebfcf491"
+                "reference": "fdbd2cb9682d602442cf45a51f2f9d613b8940fd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/chapmancbVCU/chappy-php-framework/zipball/631dbb604004f3470462d9362bcf0d8aebfcf491",
-                "reference": "631dbb604004f3470462d9362bcf0d8aebfcf491",
+                "url": "https://api.github.com/repos/chapmancbVCU/chappy-php-framework/zipball/fdbd2cb9682d602442cf45a51f2f9d613b8940fd",
+                "reference": "fdbd2cb9682d602442cf45a51f2f9d613b8940fd",
                 "shasum": ""
             },
             "require": {
@@ -190,9 +190,9 @@
             "description": "A lightweight and extensible PHP MVC framework.",
             "support": {
                 "issues": "https://github.com/chapmancbVCU/chappy-php-framework/issues",
-                "source": "https://github.com/chapmancbVCU/chappy-php-framework/tree/v1.0.12"
+                "source": "https://github.com/chapmancbVCU/chappy-php-framework/tree/v1.0.13"
             },
-            "time": "2025-03-27T23:17:22+00:00"
+            "time": "2025-03-28T01:17:55+00:00"
         },
         {
             "name": "doctrine/inflector",
@@ -2759,16 +2759,16 @@
         },
         {
             "name": "symfony/console",
-            "version": "v7.2.1",
+            "version": "v7.2.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/console.git",
-                "reference": "fefcc18c0f5d0efe3ab3152f15857298868dc2c3"
+                "reference": "e51498ea18570c062e7df29d05a7003585b19b88"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/console/zipball/fefcc18c0f5d0efe3ab3152f15857298868dc2c3",
-                "reference": "fefcc18c0f5d0efe3ab3152f15857298868dc2c3",
+                "url": "https://api.github.com/repos/symfony/console/zipball/e51498ea18570c062e7df29d05a7003585b19b88",
+                "reference": "e51498ea18570c062e7df29d05a7003585b19b88",
                 "shasum": ""
             },
             "require": {
@@ -2832,7 +2832,7 @@
                 "terminal"
             ],
             "support": {
-                "source": "https://github.com/symfony/console/tree/v7.2.1"
+                "source": "https://github.com/symfony/console/tree/v7.2.5"
             },
             "funding": [
                 {
@@ -2848,7 +2848,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-12-11T03:49:26+00:00"
+            "time": "2025-03-12T08:11:12+00:00"
         },
         {
             "name": "symfony/deprecation-contracts",
