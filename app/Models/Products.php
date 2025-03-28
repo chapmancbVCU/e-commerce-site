@@ -1,11 +1,9 @@
 <?php
 namespace App\Models;
 use Core\Model;
-use Core\Lib\Utilities\Str;
-
 
 /**
- * 
+ * Implements features of the Products class.
  */
 class Products extends Model {
 
@@ -28,7 +26,7 @@ class Products extends Model {
     public $shipping;
     public $deleted = 0;
     public $description;
-    
+
     public function afterDelete(): void {
         //
     }
