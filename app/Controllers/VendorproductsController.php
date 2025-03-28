@@ -1,6 +1,7 @@
 <?php
 namespace App\Controllers;
 use Core\Controller;
+use App\Models\Products;
 use Core\Lib\Utilities\Env;
 
 /**
@@ -21,6 +22,7 @@ class VendorproductsController extends Controller {
     }
 
     public function addAction() {
+        $product = new Products();
         $this->view->displayErrors = [];
         $this->view->postAction = Env::get('APP_DOMAIN', '/').'vendorProducts/add';
         $this->view->render('vendorproducts/add');
