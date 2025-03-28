@@ -18,4 +18,8 @@ class VendorproductsController extends Controller {
     public function indexAction() {
         $this->view->render('vendorproducts/index');
     }
+
+    public function addAction() {
+        $this->view->render('vendorproducts/add');
+    }
 }
