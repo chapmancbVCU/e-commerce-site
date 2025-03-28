@@ -12,7 +12,7 @@ class VendordashboardController extends Controller {
      * @return void
      */
     public function onConstruct(): void{
-        $this->view->setLayout('default');
+        $this->view->setLayout('vendoradmin');
     }
 
     public function indexAction() {
