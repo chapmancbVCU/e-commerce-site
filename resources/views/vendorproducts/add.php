@@ -1,4 +1,4 @@
-<?php $this->setSiteTitle("My title here"); ?>
+<?php $this->setSiteTitle("Add Product"); ?>
 
 <!-- Head content between these two function calls.  Remove if not needed. -->
 <?php $this->start('head'); ?>
@@ -8,5 +8,10 @@
 
 <!-- Body content between these two function calls. -->
 <?php $this->start('body'); ?>
-Add
+<h1 class="text-center">Add New Product</h1>
+<div class="row">
+    <div class="col-md-10 offset-md-1">
+        <?php $this->component('add_product') ?>
+    </div>
+</div>
 <?php $this->end(); ?>
