@@ -95,7 +95,7 @@ class AuthController extends Controller {
                 ROOT . DS,
                 "5mb",
                 $newUser,
-                'profileImage'
+                'profileImages'
             );
 
             $newUser->assign($this->request->get());

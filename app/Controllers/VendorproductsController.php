@@ -39,7 +39,7 @@ class VendorproductsController extends Controller {
                 "5mb",
                 $product,
                 'productImages',
-                true
+                Uploads::MULTIPLE
             );
             $product->assign($this->request->get());
             $product->save();
