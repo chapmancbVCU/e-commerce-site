@@ -2,6 +2,7 @@
 namespace App\Controllers;
 
 use Core\Router;
+use Core\Session;
 use Core\Controller;
 use App\Models\Products;
 use Core\Lib\Utilities\Env;
@@ -49,6 +50,7 @@ class VendorproductsController extends Controller {
             if($product->validationPassed()) {
                 if($uploads) {
                     ProductImages::uploadProductImage($product->id, $uploads);
+                    Session::addMessage('success', "Product added!");
                 }
                 Router::redirect('vendorproducts/index');
             }
