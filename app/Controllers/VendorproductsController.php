@@ -6,6 +6,7 @@ use Core\Session;
 use Core\Controller;
 use App\Models\Products;
 use Core\Lib\Utilities\Env;
+use Core\Lib\Utilities\Str;
 use App\Models\ProductImages;
 use Core\Lib\FileSystem\Uploads;
 
@@ -32,7 +33,7 @@ class VendorproductsController extends Controller {
         if($this->request->isPost()) {
             $this->request->csrfCheck();
 
-            if(empty($_FILES['productImages']['tmp_name'][0])) {
+            if(Str::isEmpty($_FILES['productImages']['tmp_name'][0])) {
                 $product->addErrorMessage('productImages', 'You must choose an image');
             }
             // Handle file upload.
