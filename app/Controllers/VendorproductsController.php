@@ -28,7 +28,7 @@ class VendorproductsController extends Controller {
     public function addAction() {
         $product = new Products();
 
-        $productImages = ProductImages::findByUserId($product->id);
+        $productImages = ProductImages::findByProductId($product->id);
         if($this->request->isPost()) {
             $this->request->csrfCheck();
 
@@ -48,7 +48,7 @@ class VendorproductsController extends Controller {
                 if($uploads) {
                     ProductImages::uploadProductImage($product->id, $uploads);
                 }
-                ProductImages::updateSortByUserId($product->id, json_decode($_POST['images_sorted']));
+                ProductImages::updateSortByProductId($product->id, json_decode($_POST['images_sorted']));
 
                 // Redirect
                 Router::redirect('vendorproducts/index');

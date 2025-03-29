@@ -24,9 +24,9 @@ class ProductImages extends Model {
     protected static $maxAllowedFileSize = 5242880;
     public $name;
     public $sort;
-    protected static $_uploadPath = 'storage'.DS.'app'.DS.'private'.DS .'product_images'.DS.'user_';
+    protected static $_uploadPath = 'storage'.DS.'app'.DS.'private'.DS .'product_images'.DS.'product_';
     public $url;
-    public $user_id;
+    public $product_id;
 
     /**
      * Getter function for $allowedFileTypes array
@@ -48,17 +48,17 @@ class ProductImages extends Model {
     }
 
     /**
-     * Finds all product images for a user.
+     * Finds all product images for a product.
      *
-     * @param int $user_id The id of the user whose product images we want to 
+     * @param int $product_id The id of the product whose product images we want to 
      * retrieve.
      * @return bool|array The associative array of product image records for a 
-     * user.
+     * product.
      */
-    public static function findByUserId($user_id) {
+    public static function findByProductId($product_id) {
         return $images = self::find([
-            'conditions' => 'user_id = ?',
-            'bind' => ['user_id' => $user_id],
+            'conditions' => 'product_id = ?',
+            'bind' => ['product_id' => $product_id],
             'order' => 'sort'
         ]);
     }
@@ -104,7 +104,7 @@ class ProductImages extends Model {
     /**
      * Performs upload operation for a product image.
      *
-     * @param int $product_id The id of the user that the upload operation 
+     * @param int $product_id The id of the product that the upload operation 
      * is performed upon.
      * @param Uploads $uploads The instance of the Uploads class for this 
      * upload.
@@ -123,7 +123,7 @@ class ProductImages extends Model {
             $image = new self();
             $image->url = $path . $uploadName;
             $image->name = $uploadName;
-            $image->user_id = $product_id;
+            $image->product_id = $product_id;
             $image->sort = $lastSort;
             if($image->save()) {
                 $uploads->upload($path, $uploadName, $file['tmp_name']);
@@ -133,16 +133,16 @@ class ProductImages extends Model {
     }
 
     /**
-     * Updates sort order by user id.
+     * Updates sort order by product id.
      *
-     * @param int $user_id The id of the user whose product images we want 
+     * @param int $product_id The id of the product whose product images we want 
      * to sort.
      * @param array $sortOrder An array containing sort values for a product 
      * image.
      * @return void
      */
-    public static function updateSortByUserId($user_id, $sortOrder = []) {
-        $images = self::findByUserId($user_id);
+    public static function updateSortByProductId($product_id, $sortOrder = []) {
+        $images = self::findByProductId($product_id);
         $i = 0;
         foreach($images as $image) {
             $val = 'image_'.$image->id;
