@@ -80,6 +80,58 @@ class ProductImages extends Model {
     }
 
     /**
+     * Performs upload operation for a product image.
+     *
+     * @param int $user_id The id of the user that the upload operation 
+     * is performed upon.
+     * @param Uploads $uploads The instance of the Uploads class for this 
+     * upload.
+     * @return void
+     */
+    public static function uploadProductImage($user_id, $uploads) {
+        $lastImage = self::findFirst([
+            'conditions' => "user_id = ?",
+            'bind' => [$user_id],
+            'order' => 'sort DESC'
+        ]);
+        $lastSort = (!$lastImage) ? 0 : $lastImage->sort;
+        $path = self::$_uploadPath.$user_id.DS;
+        foreach($uploads->getFiles() as $file) {
+            $uploadName = $uploads->generateUploadFilename($file['name']);
+            $image = new self();
+            $image->url = $path . $uploadName;
+            $image->name = $uploadName;
+            $image->user_id = $user_id;
+            $image->sort = $lastSort;
+            if($image->save()) {
+                $uploads->upload($path, $uploadName, $file['tmp_name']);
+                $lastSort++;
+            }
+        }
+    }
+
+    /**
+     * Updates sort order by user id.
+     *
+     * @param int $user_id The id of the user whose product images we want 
+     * to sort.
+     * @param array $sortOrder An array containing sort values for a product 
+     * image.
+     * @return void
+     */
+    public static function updateSortByUserId($user_id, $sortOrder = []) {
+        $images = self::findByUserId($user_id);
+        $i = 0;
+        foreach($images as $image) {
+            $val = 'image_'.$image->id;
+            $sort = (in_array($val,$sortOrder)) ? array_search($val, $sortOrder) : $i;
+            $image->sort = $sort;
+            $image->save();
+            $i++;
+        }
+    }
+
+    /**
      * Performs validation for the productImages model.
      *
      * @return void
