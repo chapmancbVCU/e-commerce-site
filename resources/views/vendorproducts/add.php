@@ -18,7 +18,11 @@
         <form class="form" action=<?=$this->postAction?> method="post" enctype="multipart/form-data">
             <!-- Common form elements -->
             <?php $this->component('product_form') ?>
-            <?= FormHelper::submitBlock('Save', ['class' => 'btn btn-large btn-primary mt-3'], ['class' => 'text-end col-md-12']); ?>
+
+            <div class="col-md-12 text-end">
+            <a href="<?=Env::get('APP_DOMAIN', '/')?>vendorproducts" class="btn btn-default">Cancel</a>
+                <?= FormHelper::submitTag('Save', ['class' => 'btn btn-primary']); ?>
+            </div>
         </form>   
     </div>
 </div>
