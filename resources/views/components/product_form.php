@@ -19,7 +19,7 @@
 
 <?= FormHelper::inputBlock('file', 
     "Upload Product Image(s)", 
-    'productImages', 
+    'productImages[]', 
     '', 
     ['multiple' => 'multiple', 'class' => 'form-control', 'accept' => 'image/gif image/jpeg image/png'], 
     ['class' => 'form-group mb-3']) 
