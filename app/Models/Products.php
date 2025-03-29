@@ -53,7 +53,7 @@ class Products extends Model {
      * @return void
      */
     public function validator(): void {
-        $requiredFields =  ['name' => "Name", 'price' => 'Price', 'list' => 'List Price', 'shipping' => 'Shipping'];
+        $requiredFields =  ['name' => "Name", 'price' => 'Price', 'list' => 'List Price', 'shipping' => 'Shipping', 'description' => 'Description'];
         foreach($requiredFields as $field => $display) {
             $this->runValidation(new Required($this,['field'=>$field,'message'=>$display." is required."]));
         }
