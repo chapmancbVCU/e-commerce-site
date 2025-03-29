@@ -1,5 +1,6 @@
 <?php
 namespace App\Controllers;
+use Core\Router;
 use Core\Controller;
 use App\Models\Products;
 use Core\Lib\Utilities\Env;
@@ -24,9 +25,18 @@ class VendorproductsController extends Controller {
     public function addAction() {
         $product = new Products();
 
+        if($this->request->isPost()) {
+            $this->request->csrfCheck();
+            $product->assign($this->request->get());
+            if($product->save()) {
+                Router::redirect('vendorproducts/index');
+            }
+        }
+
+        // Configure the view.
         $this->view->product = $product;
-        $this->view->displayErrors = [];
-        $this->view->postAction = Env::get('APP_DOMAIN', '/').'vendorProducts/add';
+        $this->view->displayErrors = $product->getErrorMessages();
+        $this->view->postAction = Env::get('APP_DOMAIN', '/').'vendorproducts/add';
         $this->view->render('vendorproducts/add');
     }
 }
