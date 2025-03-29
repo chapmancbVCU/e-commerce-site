@@ -14,9 +14,16 @@
         'description',
         $this->product->description,
         ['class' => 'form-control', 'rows' => '6'],
-        ['class' => 'form-group mt-3'],
+        ['class' => 'form-group my-3'],
         $this->displayErrors
     ) ?>
-    
+
+    <?= FormHelper::inputBlock('file', 
+        "Upload Product Image(s)", 
+        'productImages', 
+        '', 
+        ['multiple' => 'multiple', 'class' => 'form-control', 'accept' => 'image/gif image/jpeg image/png'], 
+        ['class' => 'form-group mb-3'], $this->displayErrors) 
+    ?>
     <?= FormHelper::submitBlock('Save', ['class' => 'btn btn-large btn-primary mt-3'], ['class' => 'text-end col-md-12']); ?>
 </form>
