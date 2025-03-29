@@ -1,8 +1,11 @@
+<?php use Core\Lib\Utilities\Env; ?>
+<?php use Core\Lib\Utilities\Config; ?>
 <?php $this->setSiteTitle("Add Product"); ?>
 
 <!-- Head content between these two function calls.  Remove if not needed. -->
 <?php $this->start('head'); ?>
-
+<script src="<?=Env::get('APP_DOMAIN', '/')?>vendor/tinymce/tinymce/tinymce.min.js?v=<?=Config::get('config.version')?>"></script>
+<script src='<?=Env::get('APP_DOMAIN', '/')?>resources/js/descriptionTinyMCE.js'></script>
 <?php $this->end(); ?>
 
 
@@ -15,3 +18,4 @@
     </div>
 </div>
 <?php $this->end(); ?>
+
