@@ -40,7 +40,7 @@ class Products extends Model {
     }
 
     public function beforeSave(): void {
-        //
+        $this->timeStamps();
     }
 
     /**
