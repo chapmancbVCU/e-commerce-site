@@ -14,8 +14,8 @@
     'description',
     $this->product->description,
     ['class' => 'form-control'],
-    ['class' => 'form-group my-3'],
-) ?>
+    ['class' => 'form-group my-3']) 
+?>
 
 <?= FormHelper::inputBlock('file', 
     "Upload Product Image(s)", 
