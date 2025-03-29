@@ -28,7 +28,6 @@ class VendorproductsController extends Controller {
     public function addAction() {
         $product = new Products();
 
-        $productImages = ProductImages::findByProductId($product->id);
         if($this->request->isPost()) {
             $this->request->csrfCheck();
 
@@ -48,15 +47,11 @@ class VendorproductsController extends Controller {
                 if($uploads) {
                     ProductImages::uploadProductImage($product->id, $uploads);
                 }
-                ProductImages::updateSortByProductId($product->id, json_decode($_POST['images_sorted']));
-
-                // Redirect
                 Router::redirect('vendorproducts/index');
             }
         }
 
         // Configure the view.
-        $this->view->productImages = $productImages;
         $this->view->product = $product;
         $this->view->displayErrors = $product->getErrorMessages();
         $this->view->postAction = Env::get('APP_DOMAIN', '/').'vendorproducts/add';
