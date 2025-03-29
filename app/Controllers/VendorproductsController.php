@@ -27,10 +27,9 @@ class VendorproductsController extends Controller {
     }
 
     public function addAction() {
-        $user = Users::currentUser();
         $product = new Products();
 
-        $productImages = ProductImages::findByUserId($user->id);
+        $productImages = ProductImages::findByUserId($product->id);
         if($this->request->isPost()) {
             $this->request->csrfCheck();
 
@@ -40,17 +39,17 @@ class VendorproductsController extends Controller {
                 ProductImages::class,
                 ROOT . DS,
                 "5mb",
-                $user,
+                $product,
                 'productImages',
                 true
             );
             $product->assign($this->request->get(), Products::blackList);
             $product->save();
-            if($user->validationPassed()) {
+            if($product->validationPassed()) {
                 if($uploads) {
-                    ProductImages::uploadProductImage($user->id, $uploads);
+                    ProductImages::uploadProductImage($product->id, $uploads);
                 }
-                ProductImages::updateSortByUserId($user->id, json_decode($_POST['images_sorted']));
+                ProductImages::updateSortByUserId($product->id, json_decode($_POST['images_sorted']));
 
                 // Redirect
                 Router::redirect('vendorproducts/index');
@@ -58,6 +57,7 @@ class VendorproductsController extends Controller {
         }
 
         // Configure the view.
+        $this->view->productImages = $productImages;
         $this->view->product = $product;
         $this->view->displayErrors = $product->getErrorMessages();
         $this->view->postAction = Env::get('APP_DOMAIN', '/').'vendorproducts/add';
