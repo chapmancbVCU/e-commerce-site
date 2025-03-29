@@ -1,6 +1,5 @@
 <?php use Core\FormHelper; ?>
 
-<form class="form" action=<?=$this->postAction?> method="post" enctype="multipart/form-data">
     <?= FormHelper::csrfInput() ?>
     <div class="row g-3">
         <?= FormHelper::inputBlock('text', 'Name', 'name', $this->product->name, ['class' => 'form-control input-sm'], ['class' => 'form-group col-md-6'], $this->displayErrors) ?>
@@ -25,5 +24,4 @@
         ['multiple' => 'multiple', 'class' => 'form-control', 'accept' => 'image/gif image/jpeg image/png'], 
         ['class' => 'form-group mb-3'], $this->displayErrors) 
     ?>
-    <?= FormHelper::submitBlock('Save', ['class' => 'btn btn-large btn-primary mt-3'], ['class' => 'text-end col-md-12']); ?>
-</form>
+    

@@ -1,5 +1,6 @@
 <?php use Core\Lib\Utilities\Env; ?>
 <?php use Core\Lib\Utilities\Config; ?>
+<?php use Core\FormHelper; ?>
 <?php $this->setSiteTitle("Add Product"); ?>
 
 <!-- Head content between these two function calls.  Remove if not needed. -->
@@ -14,8 +15,11 @@
 <h1 class="text-center">Add New Product</h1>
 <div class="row g-3">
     <div class="col-md-10 offset-md-1 bg-light p-4 rounded shadow-sm">
-        <?php $this->component('product_form') ?>
+        <form class="form" action=<?=$this->postAction?> method="post" enctype="multipart/form-data">
+            <!-- Common form elements -->
+            <?php $this->component('product_form') ?>
+            <?= FormHelper::submitBlock('Save', ['class' => 'btn btn-large btn-primary mt-3'], ['class' => 'text-end col-md-12']); ?>
+        </form>   
     </div>
 </div>
 <?php $this->end(); ?>
-
