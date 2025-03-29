@@ -1,6 +1,10 @@
 <?php
 namespace App\Models;
 use Core\Model;
+use Core\Validators\{
+    RequiredValidator as Required,
+    NumericValidator as Numeric
+};
 
 /**
  * Implements features of the Products class.
@@ -49,6 +53,10 @@ class Products extends Model {
      * @return void
      */
     public function validator(): void {
-        //
+        $requiredFields =  ['name' => "Name", 'price' => 'Price', 'list' => 'List Price', 'shipping' => 'Shipping'];
+        foreach($requiredFields as $field => $display) {
+            $this->runValidation(new Required($this,['field'=>$field,'message'=>$display." is required."]));
+        }
+        $this->runValidation(new Numeric($this, ['field' => 'price', 'message' => 'Price must be a number']));
     }
 }
