@@ -23,7 +23,7 @@ class Migration1743266200 extends Migration {
             $table->timestamps();
             $table->softDeletes();
             $table->index('product_id');
-      });
+        });
     }
 
     /**
