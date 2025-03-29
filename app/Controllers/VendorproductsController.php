@@ -3,7 +3,6 @@ namespace App\Controllers;
 
 use Core\Router;
 use Core\Controller;
-use App\Models\Users;
 use App\Models\Products;
 use Core\Lib\Utilities\Env;
 use App\Models\ProductImages;
