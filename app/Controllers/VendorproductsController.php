@@ -45,7 +45,14 @@ class VendorproductsController extends Controller {
                 true
             );
             $product->assign($this->request->get(), Products::blackList);
-            if($product->save()) {
+            $product->save();
+            if($user->validationPassed()) {
+                if($uploads) {
+                    ProductImages::uploadProductImage($user->id, $uploads);
+                }
+                ProductImages::updateSortByUserId($user->id, json_decode($_POST['images_sorted']));
+
+                // Redirect
                 Router::redirect('vendorproducts/index');
             }
         }
