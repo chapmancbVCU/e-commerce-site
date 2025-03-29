@@ -41,7 +41,7 @@ class VendorproductsController extends Controller {
                 'productImages',
                 true
             );
-            $product->assign($this->request->get(), Products::blackList);
+            $product->assign($this->request->get());
             $product->save();
             if($product->validationPassed()) {
                 if($uploads) {
