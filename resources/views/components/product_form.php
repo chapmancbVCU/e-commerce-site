@@ -13,7 +13,7 @@
     'Description',
     'description',
     $this->product->description,
-    ['class' => 'form-control', 'rows' => '6'],
+    ['class' => 'form-control'],
     ['class' => 'form-group my-3'],
 ) ?>
 
