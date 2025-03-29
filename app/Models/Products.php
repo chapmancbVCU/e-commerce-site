@@ -12,7 +12,7 @@ use Core\Validators\{
 class Products extends Model {
 
     // Fields you don't want saved on form submit
-    // public const blackList = [];
+    public const blackList = ['id', 'deleted'];
 
     // Set to name of database table.
     protected static $_table = 'products';

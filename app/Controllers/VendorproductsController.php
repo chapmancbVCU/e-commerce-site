@@ -27,7 +27,7 @@ class VendorproductsController extends Controller {
 
         if($this->request->isPost()) {
             $this->request->csrfCheck();
-            $product->assign($this->request->get());
+            $product->assign($this->request->get(), Products::blackList);
             if($product->save()) {
                 Router::redirect('vendorproducts/index');
             }
