@@ -31,6 +31,9 @@ class VendorproductsController extends Controller {
         if($this->request->isPost()) {
             $this->request->csrfCheck();
 
+            if(empty($_FILES['productImages']['tmp_name'][0])) {
+                $product->addErrorMessage('productImages', 'You must choose an image');
+            }
             // Handle file upload.
             $uploads = Uploads::handleUpload(
                 $_FILES['productImages'],

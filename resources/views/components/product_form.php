@@ -22,6 +22,6 @@
     'productImages[]', 
     '', 
     ['multiple' => 'multiple', 'class' => 'form-control', 'accept' => 'image/gif image/jpeg image/png'], 
-    ['class' => 'form-group mb-3']) 
+    ['class' => 'form-group mb-3'])
 ?>
     
