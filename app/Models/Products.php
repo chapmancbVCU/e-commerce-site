@@ -58,5 +58,7 @@ class Products extends Model {
             $this->runValidation(new Required($this,['field'=>$field,'message'=>$display." is required."]));
         }
         $this->runValidation(new Numeric($this, ['field' => 'price', 'message' => 'Price must be a number']));
+        $this->runValidation(new Numeric($this, ['field' => 'list', 'message' => 'List Price must be a number']));
+        $this->runValidation(new Numeric($this, ['field' => 'shipping', 'message' => 'Shipping must be a number']));
     }
 }
