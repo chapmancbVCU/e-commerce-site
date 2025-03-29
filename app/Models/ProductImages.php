@@ -80,28 +80,50 @@ class ProductImages extends Model {
     }
 
     /**
+     * Deletes a product image by id.
+     *
+     * @param int $id The id of the image we want to delete.
+     * @return bool Result of delete operation.  True if success, otherwise 
+     * false.
+     */
+    public static function deleteById($id) {
+        $image = self::findById($id);
+        $sort = $image->sort;
+        $afterImages = self::find([
+            'conditions' => 'product_id = ? and sort > ?',
+            'bind' => [$image->product_id, $sort]
+        ]);
+        foreach($afterImages as $af) {
+            $af->sort = $af->sort - 1;
+            $af->save();
+        }
+        unlink(ROOT.DS.self::$_uploadPath.$image->product_id.DS.$image->name);
+        return $image->delete();
+    }
+
+    /**
      * Performs upload operation for a product image.
      *
-     * @param int $user_id The id of the user that the upload operation 
+     * @param int $product_id The id of the user that the upload operation 
      * is performed upon.
      * @param Uploads $uploads The instance of the Uploads class for this 
      * upload.
      * @return void
      */
-    public static function uploadProductImage($user_id, $uploads) {
+    public static function uploadProductImage($product_id, $uploads) {
         $lastImage = self::findFirst([
-            'conditions' => "user_id = ?",
-            'bind' => [$user_id],
+            'conditions' => "product_id = ?",
+            'bind' => [$product_id],
             'order' => 'sort DESC'
         ]);
         $lastSort = (!$lastImage) ? 0 : $lastImage->sort;
-        $path = self::$_uploadPath.$user_id.DS;
+        $path = self::$_uploadPath.$product_id.DS;
         foreach($uploads->getFiles() as $file) {
             $uploadName = $uploads->generateUploadFilename($file['name']);
             $image = new self();
             $image->url = $path . $uploadName;
             $image->name = $uploadName;
-            $image->user_id = $user_id;
+            $image->user_id = $product_id;
             $image->sort = $lastSort;
             if($image->save()) {
                 $uploads->upload($path, $uploadName, $file['tmp_name']);

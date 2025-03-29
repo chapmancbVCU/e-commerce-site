@@ -16,7 +16,13 @@ class Migration1743266200 extends Migration {
     public function up(): void {
         Schema::create('product_images', function (Blueprint $table) {
             $table->id();
-
+            $table->string('url', 255);
+            $table->integer('sort')->nullable();
+            $table->integer('product_id');
+            $table->string('name', 255);
+            $table->timestamps();
+            $table->softDeletes();
+            $table->index('product_id');
       });
     }
 
