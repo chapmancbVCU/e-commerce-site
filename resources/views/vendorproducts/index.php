@@ -20,7 +20,7 @@
     </thead>
     <tbody>
         <?php foreach($this->products as $product): ?>
-            <tr data-id="<?=$product->id?>">
+            <tr>
                 <td><?=$product->name?></td>
                 <td><?=$product->price?></td>
                 <td><?=$product->shipping?></td>
