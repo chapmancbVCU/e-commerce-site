@@ -5,6 +5,7 @@ use Core\Validators\{
     RequiredValidator as Required,
     NumericValidator as Numeric
 };
+use Core\Lib\Utilities\Arr;
 
 /**
  * Implements features of the Products class.
@@ -30,6 +31,7 @@ class Products extends Model {
     public $shipping;
     public $deleted = 0;
     public $description;
+    public $user_id;
 
     public function afterDelete(): void {
         //
@@ -45,6 +47,16 @@ class Products extends Model {
 
     public function beforeSave(): void {
         $this->timeStamps();
+    }
+
+    public static function findByUserId($user_id, $params = []) {
+        $conditions = [
+            'conditions' => 'user_id = ?',
+            'bind' => [(int)$user_id],
+            'order' => 'name'
+        ];
+        $params = Arr::merge($conditions, $params);
+        return self::find($params);
     }
 
     /**

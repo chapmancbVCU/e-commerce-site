@@ -8,5 +8,15 @@
 
 <!-- Body content between these two function calls. -->
 <?php $this->start('body'); ?>
-Vendor products
+<table class="table table-bordered table-hover table-striped">
+    <thead>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Shipping</th>
+        <th></th>
+    </thead>
+    <tbody>
+        
+    </tbody>
+</table>
 <?php $this->end(); ?>
