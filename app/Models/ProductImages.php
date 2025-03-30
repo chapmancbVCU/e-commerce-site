@@ -88,7 +88,10 @@ class ProductImages extends Model {
             $image->delete();
         }
         if($unlink) {
-            unlink(ROOT.DS.self::$_uploadPath.$image->product_id);
+            $dirName = ROOT.DS.self::$_uploadPath.$image->product_id;
+            array_map('unlink', glob("$dirName/*.*"));
+            rmdir($dirName);
+            unlink($dirName.DS);
         }
     }
     

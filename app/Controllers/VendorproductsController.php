@@ -73,6 +73,7 @@ class VendorproductsController extends Controller {
             $id = $this->request->get('id');
             $product = Products::findByIdAndUserId($id, $this->user->id);
             if($product) {
+                ProductImages::deleteImages($id, true);
                 $product->delete();
                 Session::addMessage('success', 'Product deleted');
             }
