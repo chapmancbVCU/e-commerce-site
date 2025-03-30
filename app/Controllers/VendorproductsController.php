@@ -22,15 +22,16 @@ class VendorproductsController extends Controller {
      */
     public function onConstruct(): void{
         $this->view->setLayout('vendoradmin');
+        $this->user = Users::currentUser();
     }
 
     public function indexAction() {
+        $this->view->products = Products::findByUserId($this->user->id);
         $this->view->render('vendorproducts/index');
     }
 
     public function addAction() {
         $product = new Products();
-        $user = Users::currentUser();
         
         if($this->request->isPost()) {
             $this->request->csrfCheck();
@@ -49,7 +50,7 @@ class VendorproductsController extends Controller {
                 Uploads::MULTIPLE
             );
             $product->assign($this->request->get());
-            $product->user_id = $user->id;
+            $product->user_id = $this->user->id;
             $product->save();
             if($product->validationPassed()) {
                 if($uploads) {
@@ -61,7 +62,7 @@ class VendorproductsController extends Controller {
         }
 
         // Configure the view.
-        $this->view->product->user_id = $user->id;
+        $this->view->product->user_id = $this->user->id;
         $this->view->displayErrors = $product->getErrorMessages();
         $this->view->postAction = Env::get('APP_DOMAIN', '/').'vendorproducts/add';
         $this->view->render('vendorproducts/add');
