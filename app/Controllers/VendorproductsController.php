@@ -82,4 +82,21 @@ class VendorproductsController extends Controller {
         }
         Router::redirect('vendorproducts/index');
     }
+
+    public function toggleFeaturedAction(): void {
+        if($this->request->isPost()) {
+            $this->request->csrfCheck();
+
+            $id = $this->request->get('id');
+            $product = Products::findById($id);
+
+            if($product) {
+                $product->featured = ($product->featured == 1)? 0 : 1;
+                Session::addMessage('success', ($product->featured ==1)? "Product now featured" : "Product no longer featured");
+                $product->save();
+            }
+        }
+
+        Router::redirect('vendorproducts/index');
+    }
 }
