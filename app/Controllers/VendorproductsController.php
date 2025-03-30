@@ -49,7 +49,8 @@ class VendorproductsController extends Controller {
                 'productImages',
                 Uploads::MULTIPLE
             );
-            $product->assign($this->request->get());
+            $product->assign($this->request->get(), Products::blackList);
+            $product->featured = ($this->request->get('featured') == 'on') ? 1 : 0;
             $product->user_id = $this->user->id;
             $product->save();
             if($product->validationPassed()) {
@@ -62,6 +63,7 @@ class VendorproductsController extends Controller {
         }
 
         // Configure the view.
+        $this->view->product = $product;
         $this->view->displayErrors = $product->getErrorMessages();
         $this->view->postAction = Env::get('APP_DOMAIN', '/').'vendorproducts/add';
         $this->view->render('vendorproducts/add');
