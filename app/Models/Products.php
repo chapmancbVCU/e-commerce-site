@@ -13,7 +13,7 @@ use Core\Lib\Utilities\Arr;
 class Products extends Model {
 
     // Fields you don't want saved on form submit
-    public const blackList = ['id', 'deleted'];
+    public const blackList = ['id', 'deleted', 'featured'];
 
     // Set to name of database table.
     protected static $_table = 'products';
@@ -66,6 +66,10 @@ class Products extends Model {
             'bind' => [(int)$id, (int)$user_id]
         ];
         return self::findFirst($conditions);
+    }
+
+    public function isChecked() {
+        return $this->featured == "on";
     }
 
     /**
