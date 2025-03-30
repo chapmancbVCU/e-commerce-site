@@ -68,15 +68,15 @@ class VendorproductsController extends Controller {
     }
 
     public function deleteAction() {
-        $resp = ['success' => false, 'msg' => 'Something went wrong...'];
         if($this->request->isPost()) {
+            $this->request->csrfCheck();
             $id = $this->request->get('id');
             $product = Products::findByIdAndUserId($id, $this->user->id);
             if($product) {
-                // $product->delete();
-                $resp = ['success' => true, 'msg' => 'Product Deleted.', 'model_id' => $id];
+                $product->delete();
+                Session::addMessage('success', 'Product deleted');
             }
         }
-        $this->jsonResponse($resp);
+        Router::redirect('vendorproducts/index');
     }
 }
