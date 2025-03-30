@@ -61,7 +61,7 @@ class Products extends Model {
 
     public static function findByIdAndUserId($id, $user_id) {
         $conditions = [
-            'conditions' => 'id = ? AND  $user_id = ?',
+            'conditions' => 'id = ? AND  user_id = ?',
             'bind' => [(int)$id, (int)$user_id]
         ];
         return self::findFirst($conditions);
