@@ -79,6 +79,19 @@ class ProductImages extends Model {
         $this->timeStamps();
     }
 
+    public static function deleteImages($product_id, $unlink = false) {
+        $images = self::find([
+            'conditions' => 'product_id = ?',
+            'bind' => [$product_id]
+        ]);
+        foreach($images as $image) {
+            $image->delete();
+        }
+        if($unlink) {
+            unlink(ROOT.DS.self::$_uploadPath.$image->product_id);
+        }
+    }
+    
     /**
      * Deletes a product image by id.
      *
