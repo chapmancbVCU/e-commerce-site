@@ -74,7 +74,7 @@ class VendorproductsController extends Controller {
             $product = Products::findByIdAndUserId($id, $this->user->id);
             if($product) {
                 // $product->delete();
-                $resp = ['success' => true, 'msg' => 'Product Deleted.'];
+                $resp = ['success' => true, 'msg' => 'Product Deleted.', 'model_id' => $id];
             }
         }
         $this->jsonResponse($resp);
