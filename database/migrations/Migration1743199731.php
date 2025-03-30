@@ -23,6 +23,8 @@ class Migration1743199731 extends Migration {
             $table->decimal('shipping', 10, 2);
             $table->text('description');
             $table->softDeletes();
+            $table->integer('user_id');
+            $table->index('user_id');
         });
     }
 
