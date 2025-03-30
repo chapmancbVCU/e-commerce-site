@@ -1,4 +1,5 @@
 <?php use Core\Lib\Utilities\Env; ?>
+<?php use Core\FormHelper; ?>
 <?php $this->setSiteTitle("My Products"); ?>
 
 <!-- Head content between these two function calls.  Remove if not needed. -->
@@ -24,30 +25,17 @@
                 <td><?=$product->shipping?></td>
                 <td class="text-end">
                     <a href="<?=Env::get('APP_DOMAIN')?>vendorproducts/edit/<?=$product->id?>" class="btn btn-secondary btn-sm"><i class="fas fa-edit"></i> Edit</a>
-                    <a href="#" class="btn btn-danger btn-sm" onclick="deleteProduct('<?=$product->id?>'); return false;"><i class="fas fa-trash-alt"></i> Delete</a>
+                    <form method="POST" action="<?=Env::get('APP_DOMAIN')?>vendorproducts/delete" class="d-inline-block" onsubmit="return confirm('Are you sure you want to delete this product? It cannot be reversed.');">
+                        <?= FormHelper::csrfInput() ?>
+                        
+                        <?= FormHelper::hidden('id', $product->id) ?>
+                        <button type="submit" class="btn btn-danger btn-sm">
+                            <i class="fas fa-trash-alt"></i> Delete
+                        </button>
+                    </form>
                 </td>
             </tr>
         <?php endforeach; ?>
     </tbody>
 </table>
-
-<script>
-    function deleteProduct(id) {
-        if(window.confirm("Are you sure you want to delete this product. It cannot be reversed.")){
-        jQuery.ajax({
-            url : '<?=Env::get('APP_DOMAIN', '/')?>vendorproducts/delete',
-            method : "POST",
-            data : {id : id},
-            success: function(resp) {
-                console.log(resp);
-                var msgType = (resp.success)? 'success' : 'danger';
-                if(resp.success){
-                    jQuery('tr[data-id="'+resp.model_id+'"]').remove();
-                }
-                alertMsg(resp.msg, msgType);
-            }
-        });
-    }
-}
-</script>
 <?php $this->end(); ?>
