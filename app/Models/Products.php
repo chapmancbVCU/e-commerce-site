@@ -32,6 +32,7 @@ class Products extends Model {
     public $deleted = 0;
     public $description;
     public $user_id;
+    public $featured = 0;
 
     public function afterDelete(): void {
         //
