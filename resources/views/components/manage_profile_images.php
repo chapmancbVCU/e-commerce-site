@@ -3,7 +3,7 @@
     <?php foreach($this->profileImages as $image):?>
         <div class="col flex-grow-0" id="image_<?=$image->id?>">
             <span class="btn-danger" onclick="deleteImage('<?=$image->id?>')"><i class="fa fa-times"></i></span>
-            <div class="edit-image-wrapper <?= ($image->sort == 0) ? 'current-profile-img' : ''?>" data-id="<?=$image->id?>">
+            <div class="edit-image-wrapper <?= ($image->sort == 0) ? 'current-img' : ''?>" data-id="<?=$image->id?>">
                 <img src="<?=Env::get('APP_DOMAIN', '/').$image->url?>" />
             </div>
         </div>
