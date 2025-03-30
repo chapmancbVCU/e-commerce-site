@@ -143,4 +143,23 @@ class VendorproductsController extends Controller {
 
         Router::redirect('vendorproducts/index');
     }
+
+    /**
+     * Deletes an image associated with a user's profile.
+     *
+     * @return void
+     */
+    function deleteImageAction(): void {
+        $resp = ['success' => false];
+        if($this->request->isPost()) {
+            $user = Users::currentUser();
+            $id = $this->request->get('image_id');
+            $image = ProductImages::findById($id);
+            if($user) {
+                ProductImages::deleteById($image->id);
+                $resp = ['success' => true, 'model_id' => $image->id];
+            }
+        }
+        $this->jsonResponse($resp);
+    }
 }
