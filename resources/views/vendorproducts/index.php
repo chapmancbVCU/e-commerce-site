@@ -10,6 +10,7 @@
 
 <!-- Body content between these two function calls. -->
 <?php $this->start('body'); ?>
+<?= $csrfToken = FormHelper::csrfInput() ?>
 <table class="table table-bordered table-hover table-striped table-sm">
     <thead>
         <th>Name</th>
@@ -26,9 +27,8 @@
                 <td class="text-end">
                     <a href="<?=Env::get('APP_DOMAIN')?>vendorproducts/edit/<?=$product->id?>" class="btn btn-secondary btn-sm"><i class="fas fa-edit"></i> Edit</a>
                     <form method="POST" action="<?=Env::get('APP_DOMAIN')?>vendorproducts/delete" class="d-inline-block" onsubmit="return confirm('Are you sure you want to delete this product? It cannot be reversed.');">
-                        <?= FormHelper::csrfInput() ?>
-                        
                         <?= FormHelper::hidden('id', $product->id) ?>
+                        <?= $csrfToken ?>
                         <button type="submit" class="btn btn-danger btn-sm">
                             <i class="fas fa-trash-alt"></i> Delete
                         </button>
