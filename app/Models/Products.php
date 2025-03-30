@@ -59,6 +59,14 @@ class Products extends Model {
         return self::find($params);
     }
 
+    public static function findByIdAndUserId($id, $user_id) {
+        $conditions = [
+            'conditions' => 'id = ? AND  $user_id = ?',
+            'bind' => [(int)$id, (int)$user_id]
+        ];
+        return self::findFirst($conditions);
+    }
+
     /**
      * Performs validation for the products model.
      *
