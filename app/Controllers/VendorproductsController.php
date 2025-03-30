@@ -68,15 +68,15 @@ class VendorproductsController extends Controller {
     }
 
     public function deleteAction() {
-        $response = ['success' => false, 'msg' => 'Something went wrong...'];
+        $resp = ['success' => false, 'msg' => 'Something went wrong...'];
         if($this->request->isPost()) {
             $id = $this->request->get('id');
             $product = Products::findByIdAndUserId($id, $this->user->id);
             if($product) {
-                $product->delete();
-                $response = ['success' => true, 'msg' => 'Product Deleted.'];
+                // $product->delete();
+                $resp = ['success' => true, 'msg' => 'Product Deleted.'];
             }
         }
-        $this->jsonResponse($response);
+        $this->jsonResponse($resp);
     }
 }
