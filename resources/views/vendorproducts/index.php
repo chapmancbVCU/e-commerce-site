@@ -4,7 +4,7 @@
 
 <!-- Body content between these two function calls. -->
 <?php $this->start('body'); ?>
-<?= $csrfToken = FormHelper::csrfInput() ?>
+
 <table class="table table-bordered table-hover table-striped table-sm">
     <thead>
         <th>Name</th>
@@ -23,7 +23,7 @@
                         action="<?=Env::get('APP_DOMAIN')?>vendorproducts/toggleFeatured" 
                         class="d-inline-block">
                         <?= FormHelper::hidden('id', $product->id) ?>
-                        <?= $csrfToken ?>
+                        <?= $csrfToken = FormHelper::csrfInput() ?>
                         <button type="submit" class="btn btn-sm btn-light btn-outline-warning" title="Toggle Featured">
                             <i class="<?=($product->featured == 1) ? 'fas fa-star' : 'far fa-star'?>"></i>
                         </button>
@@ -34,7 +34,7 @@
                         class="d-inline-block" 
                         onsubmit="return confirm('Are you sure you want to delete this product? It cannot be reversed.');">
                         <?= FormHelper::hidden('id', $product->id) ?>
-                        <?= $csrfToken ?>
+                        <?= $csrfToken = FormHelper::csrfInput() ?>
                         <button type="submit" class="btn btn-danger btn-sm">
                             <i class="fas fa-trash-alt"></i> Delete
                         </button>
