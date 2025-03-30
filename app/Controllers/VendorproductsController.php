@@ -66,4 +66,17 @@ class VendorproductsController extends Controller {
         $this->view->postAction = Env::get('APP_DOMAIN', '/').'vendorproducts/add';
         $this->view->render('vendorproducts/add');
     }
+
+    public function deleteAction() {
+        $response = ['success' => false, 'msg' => 'Something went wrong...'];
+        if($this->request->isPost()) {
+            $id = $this->request->get('id');
+            $product = Products::findByIdAndUserId($id, $this->user->id);
+            if($product) {
+                $product->delete();
+                $response = ['success' => true, 'msg' => 'Product Deleted.'];
+            }
+        }
+        $this->jsonResponse($response);
+    }
 }
