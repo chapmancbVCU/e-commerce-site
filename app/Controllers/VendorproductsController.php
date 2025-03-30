@@ -92,7 +92,7 @@ class VendorproductsController extends Controller {
 
             if($product) {
                 $product->featured = ($product->featured == 1)? 0 : 1;
-                Session::addMessage('success', ($product->featured ==1)? "Product now featured" : "Product no longer featured");
+                Session::addMessage('success', ($product->featured ==1)? "{$product->name} now featured" : "{$product->name} no longer featured");
                 $product->save();
             }
         }
