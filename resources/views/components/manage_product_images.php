@@ -21,7 +21,7 @@
     function deleteImage(image_id) {
         if(confirm("Are you sure? This cannot be undone!")) {
             jQuery.ajax({
-                url : APP_DOMAIN + "/product_images/deleteImage",
+                url : APP_DOMAIN + "/vendorproducts/deleteImage",
                 method: "POST",
                 data : {image_id : image_id},
                 success: function(resp) {
