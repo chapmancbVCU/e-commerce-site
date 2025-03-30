@@ -17,6 +17,7 @@
     ['class' => 'form-group my-3']) 
 ?>
 
+<?= FormHelper::checkboxBlockLabelLeft('Featured', 'featured', "on", $this->product->isChecked(), [], ['class' => 'form-group my-3']) ?>
 <?= FormHelper::inputBlock('file', 
     "Upload Product Image(s)", 
     'productImages[]', 
