@@ -88,7 +88,7 @@ class VendorproductsController extends Controller {
             $this->request->csrfCheck();
 
             $id = $this->request->get('id');
-            $product = Products::findById($id);
+            $product = Products::findByIdAndUserId($id, $this->user->id);
 
             if($product) {
                 $product->featured = ($product->featured == 1)? 0 : 1;
