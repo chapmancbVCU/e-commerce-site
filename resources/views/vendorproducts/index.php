@@ -2,12 +2,6 @@
 <?php use Core\FormHelper; ?>
 <?php $this->setSiteTitle("My Products"); ?>
 
-<!-- Head content between these two function calls.  Remove if not needed. -->
-<?php $this->start('head'); ?>
-
-<?php $this->end(); ?>
-
-
 <!-- Body content between these two function calls. -->
 <?php $this->start('body'); ?>
 <?= $csrfToken = FormHelper::csrfInput() ?>
@@ -38,8 +32,7 @@
                     <form method="POST" 
                         action="<?=Env::get('APP_DOMAIN')?>vendorproducts/delete" 
                         class="d-inline-block" 
-                        onsubmit="return confirm('Are you sure you want to delete this product? It cannot be reversed.');"
-                    >
+                        onsubmit="return confirm('Are you sure you want to delete this product? It cannot be reversed.');">
                         <?= FormHelper::hidden('id', $product->id) ?>
                         <?= $csrfToken ?>
                         <button type="submit" class="btn btn-danger btn-sm">
