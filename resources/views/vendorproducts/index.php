@@ -39,10 +39,10 @@
             method : "POST",
             data : {id : id},
             success: function(resp) {
-                console.log(resp );
+                console.log(resp);
                 var msgType = (resp.success)? 'success' : 'danger';
                 if(resp.success){
-
+                    jQuery('tr[data-id="'+resp.model_id+'"]').remove();
                 }
                 alertMsg(resp.msg, msgType);
             }
