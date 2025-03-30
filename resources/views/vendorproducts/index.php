@@ -26,7 +26,12 @@
                 <td><?=$product->shipping?></td>
                 <td class="text-end">
                     <a href="<?=Env::get('APP_DOMAIN')?>vendorproducts/edit/<?=$product->id?>" class="btn btn-secondary btn-sm"><i class="fas fa-edit"></i> Edit</a>
-                    <form method="POST" action="<?=Env::get('APP_DOMAIN')?>vendorproducts/delete" class="d-inline-block" onsubmit="return confirm('Are you sure you want to delete this product? It cannot be reversed.');">
+                    <form method="POST" 
+                        action="<?=Env::get('APP_DOMAIN')?>vendorproducts/delete" 
+                        class="d-inline-block" 
+                        onsubmit="return 
+                        confirm('Are you sure you want to delete this product? It cannot be reversed.');"
+                    >
                         <?= FormHelper::hidden('id', $product->id) ?>
                         <?= $csrfToken ?>
                         <button type="submit" class="btn btn-danger btn-sm">
