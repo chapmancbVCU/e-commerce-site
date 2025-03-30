@@ -69,6 +69,50 @@ class VendorproductsController extends Controller {
         $this->view->render('vendorproducts/add');
     }
 
+    public function editAction($id) {
+        $product = Products::findByIdAndUserId((int)$id, (int)$this->user->id);
+
+        if(!$product) {
+            Session::addMessage('danger', 'You do not have permission to edit that product.');
+            Router::redirect('vendorproducts/index');
+        }
+
+        $productImages = ProductImages::findByProductId($product->id);
+        if($this->request->isPost()) {
+            $this->request->csrfCheck();
+
+            // Handle file upload.
+            $uploads = Uploads::handleUpload(
+                $_FILES['productImages'],
+                ProductImages::class,
+                ROOT . DS,
+                "5mb",
+                $product,
+                'productImages',
+                Uploads::MULTIPLE
+            );
+
+            $product->assign($this->request->get(), Products::blackList);
+            $product->featured = ($this->request->get('featured') == 'on') ? 1 : 0;
+            $product->user_id = $this->user->id;
+            $product->save();
+
+            if($product->validationPassed()) {
+                if($uploads) {
+                    ProductImages::uploadProductImage($product->id, $uploads);
+                    Session::addMessage('success', "Product updated!");
+                }
+                ProductImages::updateSortByProductId($product->id,  json_decode($_POST['images_sorted']));
+                Router::redirect('vendorproducts/index');
+            }
+        }
+
+        $this->view->productImages = $productImages;
+        $this->view->product = $product;
+        $this->view->displayErrors = $product->getErrorMessages();
+        $this->view->render('vendorproducts/edit');
+    }
+
     public function deleteAction() {
         if($this->request->isPost()) {
             $this->request->csrfCheck();
