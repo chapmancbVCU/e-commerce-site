@@ -21,10 +21,12 @@ class Migration1743199731 extends Migration {
             $table->decimal('price', 10, 2);
             $table->decimal('list', 10, 2);
             $table->decimal('shipping', 10, 2);
+            $table->tinyInteger('featured', 1)->nullable();
             $table->text('description');
             $table->softDeletes();
             $table->integer('user_id');
             $table->index('user_id');
+            $table->index('featured');
         });
     }
 
