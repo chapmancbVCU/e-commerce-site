@@ -4,6 +4,7 @@ namespace App\Controllers;
 use Core\Router;
 use Core\Session;
 use Core\Controller;
+use App\Models\Users;
 use App\Models\Products;
 use Core\Lib\Utilities\Env;
 use Core\Lib\Utilities\Str;
@@ -29,7 +30,8 @@ class VendorproductsController extends Controller {
 
     public function addAction() {
         $product = new Products();
-
+        $user = Users::currentUser();
+        
         if($this->request->isPost()) {
             $this->request->csrfCheck();
 
@@ -47,6 +49,7 @@ class VendorproductsController extends Controller {
                 Uploads::MULTIPLE
             );
             $product->assign($this->request->get());
+            $product->user_id = $user->id;
             $product->save();
             if($product->validationPassed()) {
                 if($uploads) {
@@ -58,7 +61,7 @@ class VendorproductsController extends Controller {
         }
 
         // Configure the view.
-        $this->view->product = $product;
+        $this->view->product->user_id = $user->id;
         $this->view->displayErrors = $product->getErrorMessages();
         $this->view->postAction = Env::get('APP_DOMAIN', '/').'vendorproducts/add';
         $this->view->render('vendorproducts/add');
