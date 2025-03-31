@@ -27,6 +27,8 @@ class Migration1743199731 extends Migration {
             $table->integer('user_id');
             $table->index('user_id');
             $table->index('featured');
+            $table->integer('brand_id');
+            $table->index('brand_id');
         });
     }
 
