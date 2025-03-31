@@ -5,13 +5,13 @@ use Core\Controller;
 /**
  * Undocumented class
  */
-class BrandsController extends Controller {
+class AdminbrandsController extends Controller {
     /**
      * Runs when the object is constructed.
      *
      * @return void
      */
-    public function onConstruct(): void{
+    public function onConstruct(): void {
         $this->view->setLayout('default');
     }
 }
