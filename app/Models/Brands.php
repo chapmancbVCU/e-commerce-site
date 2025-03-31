@@ -1,6 +1,10 @@
 <?php
 namespace App\Models;
 use Core\Model;
+use Core\Validators\{
+    RequiredValidator as Required,
+    UniqueValidator as Unique
+};
 
 /**
  * Implements features of the Brands class.
@@ -14,9 +18,14 @@ class Brands extends Model {
     protected static $_table = 'brands';
 
     // Soft delete
-    // protected static $_softDelete = true;
+    protected static $_softDelete = true;
     
     // Fields from your database
+    public $id;
+    public $name;
+    public $deleted = 0;
+    public $created_at;
+    public $updated_at;
 
     public function afterDelete(): void {
         // Implement your function
@@ -31,7 +40,7 @@ class Brands extends Model {
     }
 
     public function beforeSave(): void {
-        // Implement your function
+        $this->timeStamps();
     }
 
     /**
@@ -40,6 +49,8 @@ class Brands extends Model {
      * @return void
      */
     public function validator(): void {
-        // Implement your function
+        $this->runValidation(new Required($this, ['field' => 'name', 'message' => 'Brand name is required.']));
+        // Enforce unique when brand has been deleted.
+        $this->runValidation(new Unique($this, ['field' => ['name', 'deleted'], 'message' => 'That brand already exists.']));
     }
 }

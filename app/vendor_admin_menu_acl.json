@@ -6,5 +6,6 @@
         "View Products" : "vendorproducts/index",
         "separator" : "",
         "Add Product" : "vendorproducts/add"
-    }
+    },
+    "Brands"  : "adminbrands/index"
 }      
