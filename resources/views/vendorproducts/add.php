@@ -15,7 +15,7 @@
 <h1 class="text-center">Add New Product</h1>
 <div class="row g-3 mb-5">
     <div class="col-md-10 offset-md-1 bg-light px-4 rounded shadow-sm">
-        <form class="form" action=<?=$this->postAction?> method="post" enctype="multipart/form-data">
+        <form class="form mb-3" action=<?=$this->postAction?> method="post" enctype="multipart/form-data">
             <!-- Common form elements -->
             <?php $this->component('product_form') ?>
 
