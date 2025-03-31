@@ -14,4 +14,8 @@ class AdminbrandsController extends Controller {
     public function onConstruct(): void {
         $this->view->setLayout('default');
     }
+
+    public function indexAction() {
+        $this->view->render('adminbrands/index');
+    }
 }
