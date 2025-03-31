@@ -4,7 +4,7 @@
 
 <!-- Body content between these two function calls. -->
 <?php $this->start('body'); ?>
-
+<h2 class="text-center">My Products</h2>
 <table class="table table-bordered table-hover table-striped table-sm">
     <thead>
         <th>Name</th>
