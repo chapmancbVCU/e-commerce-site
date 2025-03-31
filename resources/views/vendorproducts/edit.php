@@ -17,7 +17,7 @@
 <h1 class="text-center">Edit <?=$this->product->name?></h1>
 <div class="row g-3 mb-5">
     <div class="col-md-10 offset-md-1 bg-light px-4 rounded shadow-sm">
-        <form class="form" action="" method="post" enctype="multipart/form-data">
+        <form class="form mb-3" action="" method="post" enctype="multipart/form-data">
             <!-- Common form elements -->
             <?php $this->component('product_form') ?>
             <input type="hidden" id="images_sorted" name="images_sorted" value="" />
