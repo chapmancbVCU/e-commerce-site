@@ -26,6 +26,7 @@ class Brands extends Model {
     public $deleted = 0;
     public $created_at;
     public $updated_at;
+    public $user_id;
 
     public function afterDelete(): void {
         // Implement your function

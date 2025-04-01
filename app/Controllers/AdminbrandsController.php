@@ -32,6 +32,7 @@ class AdminbrandsController extends Controller {
         if($this->request->isPost()) {
             $this->request->csrfCheck();
             $brand = new Brands();
+            $brand->user_id = $this->user;
             $brand->name = $this->request->get('name');
             if($brand->save()) {
                 $resp = ['success' => true, 'brand' => $brand->data()];
