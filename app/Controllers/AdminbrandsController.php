@@ -32,12 +32,17 @@ class AdminbrandsController extends Controller {
         if($this->request->isPost()) {
             $this->request->csrfCheck();
             $brand = new Brands();
-            $brand->user_id = $this->user;
+            $brand->user_id = $this->user->id;
             $brand->name = $this->request->get('name');
-            if($brand->save()) {
-                $resp = ['success' => true, 'brand' => $brand->data()];
-            } else {
-                $resp = ['success' => false, 'errors' => $brand->getErrorMessages()];
+            
+            try {
+                if ($brand->save()) {
+                    $resp = ['success' => true, 'brand' => $brand->data()];
+                } else {
+                    $resp = ['success' => false, 'errors' => $brand->getErrorMessages()];
+                }
+            } catch (\Throwable $e) {
+                $resp = ['success' => false, 'errors' => [$e->getMessage()]];
             }
             $this->jsonResponse($resp);
         }
