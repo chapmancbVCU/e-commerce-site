@@ -4,7 +4,7 @@
 
 <!-- Head content between these two function calls.  Remove if not needed. -->
 <?php $this->start('head'); ?>
-
+<link rel="stylesheet" href="<?=Env::get('APP_DOMAIN', '/')?>node_modules/bootstrap/dist/css/bootstrap.bundle.css" media="screen" title="no title" charset="utf-8">
 <?php $this->end(); ?>
 
 
@@ -35,7 +35,7 @@
                         <td><?=$brand->id?></td>
                         <td><?=$brand->name?></td>
                         <td class="text-end">
-                            <a href="<?=Env::get('APP_DOMAIN')?>adminbrands/edit/<?=$brand->id?>" class="btn btn-secondary btn-sm"><i class="fas fa-edit"></i> Edit</a>
+                            <button onclick="editBrand(<?=$brand->id?>)" class="btn btn-secondary btn-sm"><i class="fas fa-edit"></i> Edit</button>
                             <form method="POST" 
                                 action="<?=Env::get('APP_DOMAIN')?>adminbrands/delete" 
                                 class="d-inline-block" 
@@ -55,4 +55,27 @@
 </div>
 
 <?= $this->component('brands_form') ?>
+<script>
+    function editBrand(id) {
+        jQuery.ajax({
+            url : '<?=Env::get('APP_DOMAIN')?>adminbrands/getBrandById',
+            method : "POST",
+            data : {id:id},
+            success : function(resp) {
+                if(resp) {
+                    jQuery('#name').val(resp.brand.name);
+                    jQuery('#brand_id').val(resp.brand.id);
+                    jQuery('#addBrandFormLabel').text('Edit Brand');
+                    
+                    const modalEl = document.getElementById('addBrandForm');
+                    const modal = new bootstrap.Modal(modalEl);
+                    modal.show();
+                } else {
+                    jQuery('#name').val('');
+                    jQuery('#brand_id').val('new');
+                }
+            }
+        });
+    }
+</script>
 <?php $this->end(); ?>

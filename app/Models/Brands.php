@@ -44,6 +44,12 @@ class Brands extends Model {
         $this->timeStamps();
     }
 
+    public static function findByUserIdAndId($user_id, $id) {
+        return self::findFirst([
+            'conditions' => 'user_id = ? AND id = ?',
+            'bind' => [$user_id, $id]
+        ]);
+    }
     /**
      * Performs validation for the Brands model.
      *
