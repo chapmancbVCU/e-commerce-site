@@ -48,9 +48,12 @@
                     } else {
                         jQuery('tr[data-id="'+resp.brand.id+'"] td:nth-child(2)').text(resp.brand.name);
                     }
+                } else if (resp.errors){
+                    alertMsg(resp.errors.name, 'danger');
                 } else {
-                    alertMsg("CSRF validation failed or name field is not unique", 'danger');
+                    alertMsg("CSRF validation failed", 'danger');
                 }
+                console.log(resp);
             },
             error: function(xhr) {
                 alertMsg("Request failed — likely CSRF token mismatch.", 'danger');
