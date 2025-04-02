@@ -49,7 +49,7 @@
                         jQuery('tr[data-id="'+resp.brand.id+'"] td:nth-child(2)').text(resp.brand.name);
                     }
                 } else {
-                    alertMsg("CSRF validation failed or form error occurred", 'danger');
+                    alertMsg("CSRF validation failed or name field is not unique", 'danger');
                 }
             },
             error: function(xhr) {
