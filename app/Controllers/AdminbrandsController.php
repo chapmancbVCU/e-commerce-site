@@ -37,6 +37,7 @@ class AdminbrandsController extends Controller {
 
     public function saveAction() {
         if($this->request->isPost()) {
+            $resp = ['success' => false];
             $brand_id = $this->request->get('brand_id');
 
             $this->request->csrfCheck();
