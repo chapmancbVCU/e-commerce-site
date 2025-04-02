@@ -57,7 +57,7 @@ class Brands extends Model {
      */
     public function validator(): void {
         $this->runValidation(new Required($this, ['field' => 'name', 'message' => 'Brand name is required.']));
-        // Enforce unique when brand has been deleted.
-        $this->runValidation(new Unique($this, ['field' => ['name', 'deleted'], 'message' => 'That brand already exists.']));
+        // Ensure brand name is unique per user where the brand is not soft-deleted (deleted = 0).
+        $this->runValidation(new Unique($this, ['field' => ['name'], 'additionalFields' => ['user_id', 'deleted'], 'message' => 'That brand already exists.']));
     }
 }
