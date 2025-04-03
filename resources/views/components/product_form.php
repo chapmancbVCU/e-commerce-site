@@ -7,6 +7,7 @@
     <?= FormHelper::inputBlock('text', 'Price', 'price', $this->product->price, ['class' => 'form-control input-sm'], ['class' => 'form-group col-md-2']) ?>
     <?= FormHelper::inputBlock('text', 'List Price', 'list', $this->product->list, ['class' => 'form-control input-sm'], ['class' => 'form-group col-md-2'],) ?>
     <?= FormHelper::inputBlock('text', 'Shipping', 'shipping', $this->product->shipping, ['class' => 'form-control input-sm'], ['class' => 'form-group col-md-2']) ?>
+    <?= FormHelper::selectBlock('Brand', 'brand_id', $this->product->brand_id, $this->brands, ['class' => 'form-control input-sm', 'required' => 'required'], ['class' => 'form-group col-md-2']); ?>
 </div>
 
 <?= FormHelper::textareaBlock(

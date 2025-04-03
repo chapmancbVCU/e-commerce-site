@@ -50,7 +50,23 @@ class Brands extends Model {
             'bind' => [$user_id, $id]
         ]);
     }
-    
+
+    public static function getOptionsForForm($user_id) {
+        $brands = self::find([
+            'columns' => 'id, name',
+            'conditions' => 'user_id = ?',
+            'bind' => [$user_id],
+            'order' => 'name'
+        ]);
+
+        $brandsAry = ['' => '-Select Brand-'];
+        foreach($brands as $brand) {
+            $brandsAry[$brand->id] = $brand->name;
+        }
+
+        return $brandsAry;
+    }
+
     /**
      * Performs validation for the Brands model.
      *

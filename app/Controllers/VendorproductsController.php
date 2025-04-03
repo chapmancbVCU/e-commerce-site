@@ -5,6 +5,7 @@ use Core\Router;
 use Core\Session;
 use Core\Controller;
 use App\Models\Users;
+use App\Models\Brands;
 use App\Models\Products;
 use Core\Lib\Utilities\Env;
 use Core\Lib\Utilities\Str;
@@ -107,6 +108,7 @@ class VendorproductsController extends Controller {
             }
         }
 
+        $this->view->brands = Brands::getOptionsForForm($this->user->id);
         $this->view->productImages = $productImages;
         $this->view->product = $product;
         $this->view->displayErrors = $product->getErrorMessages();
