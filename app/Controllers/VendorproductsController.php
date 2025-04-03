@@ -65,6 +65,7 @@ class VendorproductsController extends Controller {
 
         // Configure the view.
         $this->view->product = $product;
+        $this->view->brands = Brands::getOptionsForForm($this->user->id);
         $this->view->displayErrors = $product->getErrorMessages();
         $this->view->postAction = Env::get('APP_DOMAIN', '/').'vendorproducts/add';
         $this->view->render('vendorproducts/add');
