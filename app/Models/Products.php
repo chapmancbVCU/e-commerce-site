@@ -73,6 +73,30 @@ class Products extends Model {
         return $this->featured == "on";
     }
 
+    public static function featuredProducts() {
+        $conditions = [
+            'columns' => 'products.*, pi.url AS url, brands.name AS brand',
+            'joins' => [
+                ['product_images', 'products.id = pi.product_id', 'pi'],
+                ['brands', 'products.brand_id = brands.id']
+            ],
+            'conditions' => 'products.featured = 1 AND products.deleted = 0 AND pi.sort = 0',
+            'group' => 'pi.product_id'
+        ];
+        return self::find($conditions);
+
+        // $sql = "SELECT products.*, pi.url as url, brands.name as brand
+        // FROM products
+        // JOIN product_images as pi
+        // ON products.id = pi.product_id
+        // JOIN brands
+        // ON products.brand_id = brands.id
+        // WHERE products.featured = '1' and products.deleted = '0' and pi.sort = '0'
+        // group by pi.product_id
+        // ";
+    }
+    
+
     /**
      * Performs validation for the products model.
      *

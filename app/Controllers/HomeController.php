@@ -1,6 +1,7 @@
 <?php
 namespace App\Controllers;
 use Core\Controller;
+use App\Models\Products;
 /**
  * Implements support for our Home controller.  Functions found in this class 
  * will support tasks related to the home page.
@@ -13,16 +14,8 @@ class HomeController extends Controller {
      * @return void
      */
     public function indexAction(): void {
+        $products = Products::featuredProducts();
+        dd($products);
         $this->view->render('home/index');
     }
-
-    /**
-     * Demonstration for an Ajax request.
-     *
-     * @return void
-     */
-    public function testAjaxAction(): void {
-        $resp = ['success'=>true,'data'=>['id'=>23,'name'=>'Hello World','favorite_food'=>'bread']];
-        $this->jsonResponse($resp);
-      }
 }
