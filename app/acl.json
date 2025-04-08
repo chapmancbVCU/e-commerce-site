@@ -2,6 +2,7 @@
     "Guest" : {
         "denied" : {},
         "Home" : ["*"],
+        "Products" : ["*"],
         "Auth" : ["login", "register", "resetPassword"],
         "Restricted" : ["*"]
     },
