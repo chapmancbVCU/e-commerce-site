@@ -22,13 +22,6 @@
   font-size: 16px;
 }
 
-/* Main content */
-.main {
-  margin-left: 250px; /* Same as the width of the sidenav */
-  font-size: 20px; /* Increased text to enable scrolling */
-  padding: 0px 10px;
-}
-
 .navbar-dark .dropdown-item.active, .navbar-dark .dropdown-item:active {
   background-color: #343a40;
 }
@@ -36,4 +29,36 @@
 .profile-img {
   height: 35px;
   width: auto;
+}
+
+.products-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.products-wrapper .card {
+  margin: 6px;
+  width: 275px;
+}
+
+.products-wrapper .card .card-img-top {
+  height: 200px;
+  width: auto;
+  object-fit: contain;
+}
+
+.list-price {
+  color: #888;
+  font-size: 12px;
+  text-decoration: line-through;
+}
+
+.products-wrapper .card-title a {
+  color: #000;
+}
+
+.products-wrapper .card-title a:hover {
+  color: #888;
+  text-decoration: none;
 }

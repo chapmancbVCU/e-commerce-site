@@ -15,7 +15,7 @@ class HomeController extends Controller {
      */
     public function indexAction(): void {
         $products = Products::featuredProducts();
-        dd($products);
+        $this->view->products = $products;
         $this->view->render('home/index');
     }
 }
