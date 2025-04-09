@@ -89,6 +89,28 @@ class Products extends Model {
         return self::find($conditions);
     }
     
+    public function getBrandName() {
+        if(empty($this->brand_id)) return "";
+
+        $brand = Brands::findFirst([
+            'conditions' => 'id = ?',
+            'bind' => [$this->brand_id]
+        ]);
+
+        return ($brand) ? $brand->name : "";
+    }
+
+    public function displayShipping() {
+        return ($this->shipping == '0.00') ? "Free Shipping" : "$" . $this->shipping;
+    }
+
+    public function getImages() {
+        return ProductImages::find([
+            'conditions' => 'product_id = ?',
+            'bind' => [$this->id],
+            'order' => 'sort'
+        ]);
+    }
 
     /**
      * Performs validation for the products model.
