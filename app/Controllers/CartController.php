@@ -14,4 +14,8 @@ class CartController extends Controller {
     public function onConstruct(): void {
         $this->view->setLayout('default');
     }
+
+    public function indexAction(): void {
+        $this->view->render('cart/index');
+    }
 }
