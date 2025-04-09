@@ -27,4 +27,7 @@ use Core\Lib\Utilities\Env;
     'time_zone' => Env::get('TIME_ZONE') ?? 'UTC',
     
     's3_bucket' => Env::get('S3_BUCKET') ?? null,
+
+    'cart_cookie_name' => Env::get('CART_COOKIE_NAME'),
+    'cart_cookie_expiry' => Env::get('CART_COOKIE_EXPIRY')
  ];
