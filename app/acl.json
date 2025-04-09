@@ -3,6 +3,7 @@
         "denied" : {},
         "Home" : ["*"],
         "Products" : ["*"],
+        "Cart" : ["*"],
         "Auth" : ["login", "register", "resetPassword"],
         "Restricted" : ["*"]
     },
