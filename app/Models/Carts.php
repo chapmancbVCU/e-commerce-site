@@ -1,6 +1,8 @@
 <?php
 namespace App\Models;
 use Core\Model;
+use Core\Cookie;
+use Core\Lib\Utilities\Env;
 
 /**
  * Implements features of the Carts class.
@@ -22,7 +24,7 @@ class Carts extends Model {
     public $updated_at;
     public $purchased = 0;
     public $deleted = 0;
-    
+
     public function afterDelete(): void {
         // Implement your function
     }
@@ -36,7 +38,19 @@ class Carts extends Model {
     }
 
     public function beforeSave(): void {
-        // Implement your function
+        $this->timeStamps();
+    }
+
+    public static function findCurrentCartOrCreateNew() {
+        if(!Cookie::exists(Env::get('CART_COOKIE_NAME'))) {
+            $cart = new Carts();
+            $cart->save();
+        } else {
+            $cart_id = Cookie::get(Env::get('CART_COOKIE_NAME'));
+            $cart = self::findById((int)$cart_id);
+        }
+        Cookie::set(Env::get('CART_COOKIE_NAME'), $cart->id, Env::get('CART_COOKIE_EXPIRY'));
+        return $cart;
     }
 
     /**
