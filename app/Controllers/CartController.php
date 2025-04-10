@@ -21,6 +21,8 @@ class CartController extends Controller {
     }
 
     public function indexAction(): void {
+        $cart_id = Cookie::get(Env::get('CART_COOKIE_NAME'));
+        $items = Carts::findAllItemsByCartId((int)$cart_id);
         $this->view->render('cart/index');
     }
 

@@ -53,6 +53,21 @@ class Carts extends Model {
         return $cart;
     }
 
+    public static function findAllItemsByCartId($cart_id) {
+        $params = [
+            'columns' => 'cart_items.*, p.name, p.price, p.shipping, pi.url',
+            'joins' => [
+                ['products', 'p.id = cart_items.product_id', 'p'],
+                ['product_images', 'p.id = pi.product_id', 'pi']
+            ],
+            'conditions' => 'cart_items.cart_id = ? AND pi.sort = 0 AND cart_items.deleted = 0',
+            'bind' => [$cart_id]
+        ];
+    
+        // Call DB directly to skip soft delete logic
+        return static::getDb()->find('cart_items', $params, static::class) ?: [];
+    }
+
     /**
      * Performs validation for the Carts model.
      *
