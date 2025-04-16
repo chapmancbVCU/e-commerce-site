@@ -55,10 +55,11 @@ class Carts extends Model {
 
     public static function findAllItemsByCartId($cart_id) {
         $params = [
-            'columns' => 'cart_items.*, p.name, p.price, p.shipping, pi.url',
+            'columns' => 'cart_items.*, p.name, p.price, p.shipping, pi.url, brands.name AS brand',
             'joins' => [
                 ['products', 'p.id = cart_items.product_id', 'p'],
-                ['product_images', 'p.id = pi.product_id', 'pi']
+                ['product_images', 'p.id = pi.product_id', 'pi'],
+                ['brands', 'brands.id = p.brand_id', null, 'left']
             ],
             'conditions' => 'cart_items.cart_id = ? AND pi.sort = 0 AND cart_items.deleted = 0',
             'bind' => [$cart_id]

@@ -22,8 +22,22 @@ class CartController extends Controller {
 
     public function indexAction(): void {
         $cart_id = Cookie::get(Env::get('CART_COOKIE_NAME'));
+        $itemCount = 0;
+        $subTotal = 0.00;
+        $shippingTotal = 0.00;
+
         $items = Carts::findAllItemsByCartId((int)$cart_id);
 
+        foreach($items as $item) {
+            $itemCount += $item->qty;
+            $shippingTotal += ($item->qty * $item->shipping);
+            $subTotal += ($item->qty * $item->price);
+        }
+
+        $this->view->subTotal = $subTotal;
+        $this->view->shippingTotal = $shippingTotal;
+        $this->view->grandTotal = $subTotal + $shippingTotal;
+        $this->view->itemCount = $itemCount;
         $this->view->items = $items;
         $this->view->render('cart/index');
     }
