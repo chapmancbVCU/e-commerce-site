@@ -1,10 +1,12 @@
 <?php
 namespace App\Controllers;
 
-use App\Models\CartItems;
 use Core\Cookie;
+use Core\Router;
+use Core\Session;
 use Core\Controller;
 use App\Models\Carts;
+use App\Models\CartItems;
 use Core\Lib\Utilities\Env;
 
 /**
@@ -48,5 +50,27 @@ class CartController extends Controller {
         $item->qty = $item->qty + 1;
         $item->save();
         $this->view->render('cart/addToCart');
+    }
+
+    public function changeQtyAction($direction, $item_id) {
+        $item = CartItems::findById((int)$item_id);
+        if($direction == 'down') {
+            $item->qty -= 1;
+        } else {
+            $item->qty += 1;
+        }
+
+        if($item->qty > 0) {
+            $item->save();
+        }
+        Session::addMessage('info', 'Cart Updated');
+        Router::redirect('cart');
+    }
+
+    public function removeItemAction($item_id) {
+        $item = CartItems::findById((int)$item_id);
+        $item->delete();
+        Session::addMessage('info', 'Cart Updated');
+        Router::redirect('cart');
     }
 }

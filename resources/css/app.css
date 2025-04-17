@@ -147,6 +147,17 @@
   flex-grow: 1;
 }
 
+.shopping-cart-item-qty input {
+  width: 40px;
+  margin: 0px 10px;
+}
+
+.shopping-cart-item-qty label {
+  margin-right: 18px;
+  margin-bottom: 0;
+  color: #555;
+}
+
 .shopping-cart-item-price {
   font-size: 18px;
   color: #101820;
@@ -183,4 +194,15 @@
 .cart-line-item.grand-total {
   font-size: 16px;
   font-weight: bold;
+}
+
+.remove-item {
+  font-size: 12px;
+  color: crimson;
+  cursor: pointer;
+  margin-top: 12px;
+}
+
+.remove-item:hover {
+  color: #ff0000;
 }
