@@ -36,9 +36,9 @@ class CartController extends Controller {
             $subTotal += ($item->qty * $item->price);
         }
 
-        $this->view->subTotal = $subTotal;
-        $this->view->shippingTotal = $shippingTotal;
-        $this->view->grandTotal = $subTotal + $shippingTotal;
+        $this->view->subTotal = number_format($subTotal, 2);
+        $this->view->shippingTotal = number_format($shippingTotal, 2);
+        $this->view->grandTotal = number_format($subTotal + $shippingTotal, 2);
         $this->view->itemCount = $itemCount;
         $this->view->items = $items;
         $this->view->render('cart/index');
