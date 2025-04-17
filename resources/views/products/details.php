@@ -55,7 +55,7 @@
         </div>
         <div class="product-details-body"><?=html_entity_decode($this->product->description)?></div>
         <div>
-            <a href="<?=Env::get('APP_DOMAIN')?>cart/addToCart/<?=$product->id?>" class="btn btn-info">
+            <a href="<?=Env::get('APP_DOMAIN')?>cart/addToCart/<?=$this->product->id?>" class="btn btn-info">
                 <i class="fas fa-cart-plus p-2"></i>Add to Shopping Cart
             </a>
         </div>
