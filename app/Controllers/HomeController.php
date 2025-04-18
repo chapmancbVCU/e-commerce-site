@@ -2,6 +2,8 @@
 namespace App\Controllers;
 use Core\Controller;
 use App\Models\Products;
+use Core\DB;
+
 /**
  * Implements support for our Home controller.  Functions found in this class 
  * will support tasks related to the home page.
@@ -14,6 +16,10 @@ class HomeController extends Controller {
      * @return void
      */
     public function indexAction(): void {
+        // DB::getInstance()->query(
+        //     "UPDATE users SET acl = json_insert(acl, '\$[#]', ?) WHERE id = ?",
+        //     ['VendorAdmin', 1]
+        // );
         $products = Products::featuredProducts();
         $this->view->products = $products;
         $this->view->render('home/index');
