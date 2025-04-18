@@ -6,6 +6,7 @@ use Core\Validators\{
     NumericValidator as Numeric
 };
 use Core\Lib\Utilities\Arr;
+use Core\DB;
 
 /**
  * Implements features of the Products class.
@@ -74,10 +75,13 @@ class Products extends Model {
     }
 
     public static function featuredProducts() {
+        $dbDriver = DB::getInstance()->getPDO()->getAttribute(\PDO::ATTR_DRIVER_NAME);
+        // Use ANY_VALUE in MySQL to avoid ONLY_FULL_GROUP_BY issues
+        $urlColumn = $dbDriver === 'mysql' ? 'ANY_VALUE(pi.url)' : 'pi.url';
+        $brandColumn = $dbDriver === 'mysql' ? 'ANY_VALUE(brands.name)' : 'brands.name';
+
         $conditions = [
-            'columns' => 'products.*,
-                          ANY_VALUE(pi.url) AS url, 
-                          ANY_VALUE(brands.name) AS brand',
+            'columns' => "products.*, {$urlColumn} AS url, {$brandColumn} AS brand",
             'joins' => [
                 ['product_images', 'products.id = pi.product_id', 'pi'],
                 ['brands', 'products.brand_id = brands.id']
@@ -85,7 +89,7 @@ class Products extends Model {
             'conditions' => 'products.featured = 1 AND products.deleted = 0 AND pi.sort = 0',
             'group' => 'products.id'
         ];
-        
+
         return self::find($conditions);
     }
     
