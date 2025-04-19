@@ -29,5 +29,7 @@ use Core\Lib\Utilities\Env;
     's3_bucket' => Env::get('S3_BUCKET') ?? null,
 
     'cart_cookie_name' => Env::get('CART_COOKIE_NAME'),
-    'cart_cookie_expiry' => Env::get('CART_COOKIE_EXPIRY')
+    'cart_cookie_expiry' => Env::get('CART_COOKIE_EXPIRY'),
+
+    'gateway' => Env::get('GATEWAY')
  ];
