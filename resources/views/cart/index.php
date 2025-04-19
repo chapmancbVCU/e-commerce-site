@@ -55,7 +55,7 @@
         <aside class="col col-md-4">
             <div class="shopping-cart-summary">
                 <div class="d-grid">
-                    <button class="btn btn-lg btn-primary">Proceed With Checkout</button>
+                    <a class="btn btn-lg btn-primary" href="<?= Env::get('APP_DOMAIN')?>cart/checkout/<?=$this->cartId?>">Proceed With Checkout</a>
                 </div>
                 <div class="cart-line-item">
                     <div>Item<?= ($this->itemCount == 1) ? " " : "s "?>(<?=$this->itemCount?>)</div>
