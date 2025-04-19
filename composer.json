@@ -11,7 +11,8 @@
   ],
   "require": {
     "php": ">=8.3",
-      "chappy-php/chappy-php-framework": "^1.0"
+      "chappy-php/chappy-php-framework": "^1.0",
+    "stripe/stripe-php": "^17.1"
   },
   "autoload": {
     "psr-4": {
