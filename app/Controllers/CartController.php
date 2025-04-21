@@ -1,6 +1,7 @@
 <?php
 namespace App\Controllers;
 
+use App\Lib\Gateways\Gateway;
 use Core\Cookie;
 use Core\Router;
 use Core\Session;
@@ -36,6 +37,7 @@ class CartController extends Controller {
             $subTotal += ($item->qty * $item->price);
         }
 
+        $this->view->cartId = $cart_id;
         $this->view->subTotal = number_format($subTotal, 2);
         $this->view->shippingTotal = number_format($shippingTotal, 2);
         $this->view->grandTotal = number_format($subTotal + $shippingTotal, 2);
@@ -46,7 +48,7 @@ class CartController extends Controller {
 
     public function addToCartAction($product_id) {
         $cart = Carts::findCurrentCartOrCreateNew($product_id);
-        $item = CartItems::addProductToCart($cart->id, (int)$product_id);
+        $item = CartItems::addProductToCart((int)$cart->id, (int)$product_id);
         $item->qty = $item->qty + 1;
         $item->save();
         $this->view->render('cart/addToCart');
@@ -72,5 +74,11 @@ class CartController extends Controller {
         $item->delete();
         Session::addMessage('info', 'Cart Updated');
         Router::redirect('cart');
+    }
+
+    public function checkoutAction($cart_id) {
+        $gw = Gateway::build((int)$cart_id);
+        
+        $this->view->render($gw->getView());
     }
 }
