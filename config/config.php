@@ -31,5 +31,8 @@ use Core\Lib\Utilities\Env;
     'cart_cookie_name' => Env::get('CART_COOKIE_NAME'),
     'cart_cookie_expiry' => Env::get('CART_COOKIE_EXPIRY'),
 
-    'gateway' => Env::get('GATEWAY')
+    'gateway' => Env::get('GATEWAY'),
+
+    'stripe_public' => Env::get('STRIPE_PUBLIC'),
+    'stripe_private' => Env::get('STRIPE_PRIVATE')
  ];
