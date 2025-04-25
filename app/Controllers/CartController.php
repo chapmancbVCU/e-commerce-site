@@ -1,14 +1,15 @@
 <?php
 namespace App\Controllers;
 
-use App\Lib\Gateways\Gateway;
 use Core\Cookie;
 use Core\Router;
 use Core\Session;
 use Core\Controller;
 use App\Models\Carts;
+use Stripe\StripeClient;
 use App\Models\CartItems;
 use Core\Lib\Utilities\Env;
+use App\Lib\Gateways\Gateway;
 
 /**
  * Undocumented class
@@ -47,7 +48,7 @@ class CartController extends Controller {
     }
 
     public function addToCartAction($product_id) {
-        $cart = Carts::findCurrentCartOrCreateNew($product_id);
+        $cart = Carts::findCurrentCartOrCreateNew((int)$product_id);
         $item = CartItems::addProductToCart((int)$cart->id, (int)$product_id);
         $item->qty = $item->qty + 1;
         $item->save();
