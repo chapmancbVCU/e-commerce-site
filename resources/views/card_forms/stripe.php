@@ -29,8 +29,9 @@
                 <div id="card-errors" role="alert" class="text-danger col-md-12 mb-3">
         
                 </div>
-        
-                <button>Submit Payment</button>
+                <div class="col-md-12">
+                    <button class="btn btn-lg btn-primary">Submit Payment</button>
+                </div>
             </div>
         </form>
     </div>
