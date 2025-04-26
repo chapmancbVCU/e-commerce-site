@@ -15,7 +15,7 @@
                         'Name', 
                         'name', 
                         $this->tx->name, 
-                        ['class' => 'form-control form-control-sm'], 
+                        ['class' => 'form-control form-control-sm mb-3'], 
                         ['class' => 'form-group col-md-12'], 
                         $this->formErrors) 
                     ?>
@@ -25,7 +25,7 @@
                         'Shipping Address', 
                         'shipping_address1', 
                         $this->tx->shipping_address1, 
-                        ['class' => 'form-control form-control-sm'], 
+                        ['class' => 'form-control form-control-sm mb-3'], 
                         ['class' => 'form-group col-md-12'], 
                         $this->formErrors) 
                     ?>
@@ -35,7 +35,7 @@
                         'Shipping Address (cont.)', 
                         'shipping_address2', 
                         $this->tx->shipping_address2, 
-                        ['class' => 'form-control form-control-sm'], 
+                        ['class' => 'form-control form-control-sm mb-3'], 
                         ['class' => 'form-group col-md-12'], 
                         $this->formErrors) 
                     ?>
@@ -45,7 +45,7 @@
                         'City', 
                         'shipping_city', 
                         $this->tx->shipping_city, 
-                        ['class' => 'form-control form-control-sm'], 
+                        ['class' => 'form-control form-control-sm mb-3'], 
                         ['class' => 'form-group col-md-6'], 
                         $this->formErrors) 
                     ?>
@@ -55,7 +55,7 @@
                         'State', 
                         'shipping_state', 
                         $this->tx->shipping_state, 
-                        ['class' => 'form-control form-control-sm'], 
+                        ['class' => 'form-control form-control-sm mb-3'], 
                         ['class' => 'form-group col-md-3'], 
                         $this->formErrors) 
                     ?>
