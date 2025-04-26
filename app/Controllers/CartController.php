@@ -92,7 +92,7 @@ class CartController extends Controller {
                 if(!$resp['success']) {
                     $tx->addErrorMessage('card-element', $resp['msg']);
                 } else {
-                    Router::redirect('cart/thankYou' . $tx->id);
+                    Router::redirect('cart/thankYou/' . $tx->id);
                 }
             }
         }
