@@ -25,7 +25,7 @@ class CartController extends Controller {
     }
 
     public function indexAction(): void {
-        $cart_id = Cookie::get(Env::get('CART_COOKIE_NAME'));
+        $cart_id = (Cookie::exists(Env::get('CART_COOKIE_NAME'))) ? Cookie::get(Env::get('CART_COOKIE_NAME')) : false;
         $itemCount = 0;
         $subTotal = 0.00;
         $shippingTotal = 0.00;
