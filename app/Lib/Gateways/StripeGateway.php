@@ -3,6 +3,7 @@
 namespace App\Lib\Gateways;
 use Stripe\Charge;
 use Stripe\Stripe;
+use App\Models\Carts;
 use Core\Lib\Utilities\Env;
 use App\Models\Transactions;
 use App\Lib\Gateways\AbstractGateway;
@@ -26,6 +27,11 @@ class StripeGateway extends AbstractGateway {
         $ch = $this->charge($data);
         $this->handleChargeResponse($ch);
         $tx = $this->createTransaction($ch);
+
+        if($this->chargeSuccess) {
+            Carts::purchaseCart($this->cart_id);
+        }
+
         return [
             'success' => $this->chargeSuccess,
             'message' => $this->msgToUser,

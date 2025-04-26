@@ -69,6 +69,14 @@ class Carts extends Model {
         return static::getDb()->find('cart_items', $params, static::class) ?: [];
     }
 
+    public static function purchaseCart($cart_id) {
+        $cart = self::findById($cart_id);
+        $cart->purchased = 1;
+        $cart->save();
+        Cookie::delete(Env::get('CART_COOKIE_NAME'));
+        return $cart;
+    }
+
     /**
      * Performs validation for the Carts model.
      *
