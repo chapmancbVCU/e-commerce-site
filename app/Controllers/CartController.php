@@ -10,7 +10,7 @@ use Stripe\StripeClient;
 use App\Models\CartItems;
 use Core\Lib\Utilities\Env;
 use App\Lib\Gateways\Gateway;
-
+use App\Models\Transactions;
 /**
  * Undocumented class
  */
@@ -79,7 +79,33 @@ class CartController extends Controller {
 
     public function checkoutAction($cart_id) {
         $gw = Gateway::build((int)$cart_id);
-        
-        $this->view->render($gw->getView());
+        $tx = new Transactions();
+        if($this->request->isPost()) {
+            $whiteList = ['name', 'shipping_address1', 'shipping_address2', 'shipping_city', 'shipping_state', 'shipping_zip'];
+            $this->request->csrfCheck();
+            $tx->assign($this->request->get(), $whiteList, false);
+            $tx->validateShipping();
+            $step = $this->request->get('step');
+            if($step == '2') {
+                $resp = $gw->processForm($this->request->get());
+                $tx = $resp['tx'];
+                if(!$resp['success']) {
+                    $tx->addErrorMessage('card-element', $resp['msg']);
+                } else {
+                    Router::redirect('cart/thankYou' . $tx->id);
+                }
+            }
+        }
+
+        $this->view->formErrors = $tx->getErrorMessages();
+        $this->view->tx = $tx;
+        $this->view->grandTotal = $gw->grandTotal;
+        $this->view->items = $gw->items;
+        $this->view->cartId = $cart_id;
+        if(!$this->request->isPost() || !$tx->validationPassed()) {
+            $this->view->render('cart/shipping_address');
+        } else {
+            $this->view->render($gw->getView());
+        }
     }
 }
