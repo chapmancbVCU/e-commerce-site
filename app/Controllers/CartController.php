@@ -108,4 +108,10 @@ class CartController extends Controller {
             $this->view->render($gw->getView());
         }
     }
+
+    public function thankYouAction($tx_id) {
+        $tx = Transactions::findById((int)$tx_id);
+        $this->view->tx = $tx;
+        $this->view->render('cart/thankYou');
+    }
 }
