@@ -12,6 +12,12 @@
         <form action="<?=Env::get('APP_DOMAIN')?>cart/checkout/<?=$this->cartId?>" method="post" id="payment-form">
             <?= Forms::csrfInput() ?>
             <?= Forms::hidden('step', "2") ?>
+            <?= Forms::hidden('name' ,$this->tx->name) ?>
+            <?= Forms::hidden('shipping_address1', $this->tx->shipping_address1) ?>
+            <?= Forms::hidden('shipping_address2', $this->tx->shipping_address2) ?>
+            <?= Forms::hidden('shipping_city', $this->tx->shipping_city) ?>
+            <?= Forms::hidden('shipping_state', $this->tx->shipping_state) ?>
+            <?= Forms::hidden('shipping_zip', $this->tx->shipping_zip) ?>
             <div class="form-group col-md-12">
                 <label for="card-element" class="control-label">
                     Credit or debit card
