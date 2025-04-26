@@ -1,26 +1,40 @@
 <?php use Core\Lib\Utilities\Env; ?>
+<?php use Core\FormHelper as Forms; ?>
 <?php $this->setSiteTitle("Checkout"); ?>
 
 <!-- Body content between these two function calls. -->
 <?php $this->start('body'); ?>
-<script src="https://js.stripe.com/v3/"></script>
-<form action="/charge" method="post" id="payment-form">
-    <div class="form-row">
-        <label for="card-element">
-            Credit or debit card
-        </label>
-        <div id="card-element">
 
-        </div>
+<div class="row">
+    <div class="col-md-8">
+        <h3>Purchase Details</h3>
 
-        <div id="card-errors" role="alert">
-
-        </div>
-
-        <button>Submit Payment</button>
+        <form action="<?=Env::get('APP_DOMAIN')?>cart/checkout/<?=$this->cartId?>" method="post" id="payment-form">
+            <?= Forms::csrfInput() ?>
+            <?= Forms::hidden('step', "2") ?>
+            <div class="form-group col-md-12">
+                <label for="card-element" class="control-label">
+                    Credit or debit card
+                </label>
+                <div id="card-element" class="form-control">
+        
+                </div>
+        
+                <div id="card-errors" role="alert" class="text-danger col-md-12 mb-3">
+        
+                </div>
+        
+                <button>Submit Payment</button>
+            </div>
+        </form>
     </div>
-</form>
 
+    <div class="col-md-4">
+        <?= $this->component('product_preview') ?>
+    </div>
+</div>
+
+<script src="https://js.stripe.com/v3/"></script>
 <script>
     // Set your publishable key: remember to change this to your live publishable key in production
     // See your keys here: https://dashboard.stripe.com/apikeys
