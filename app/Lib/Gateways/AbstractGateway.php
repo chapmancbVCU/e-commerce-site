@@ -35,4 +35,6 @@ abstract class AbstractGateway {
     abstract public function handleChargeResponse($ch);
 
     abstract public function createTransaction($ch);
+
+    abstract public function getToken();
 }

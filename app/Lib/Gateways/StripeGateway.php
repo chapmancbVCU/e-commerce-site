@@ -82,4 +82,8 @@ class StripeGateway extends AbstractGateway {
         $tx->save();
         return $tx;
     }
+
+    public function getToken() {
+        return false;
+    }
 }
