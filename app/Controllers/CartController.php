@@ -78,8 +78,10 @@ class CartController extends Controller {
     }
 
     public function checkoutAction($cart_id) {
-        $gw = Gateway::build((int)$cart_id);
+        $gw = Gateway::build();
+        $gw->populateItems($cart_id);
         $tx = new Transactions();
+
         if($this->request->isPost()) {
             $whiteList = ['name', 'shipping_address1', 'shipping_address2', 'shipping_city', 'shipping_state', 'shipping_zip'];
             $this->request->csrfCheck();
@@ -97,6 +99,7 @@ class CartController extends Controller {
             }
         }
 
+        $this->view->gatewayToken = $gw->getToken();
         $this->view->formErrors = $tx->getErrorMessages();
         $this->view->tx = $tx;
         $this->view->grandTotal = $gw->grandTotal;

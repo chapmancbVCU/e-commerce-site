@@ -13,7 +13,7 @@ abstract class AbstractGateway {
     public $chargeSuccess = false;
     public $msgToUser = '';
 
-    public function __construct($cart_id) {
+    public function populateItems($cart_id) {
         $this->cart_id = $cart_id;
         $this->items = Carts::findAllItemsByCartId($cart_id);
 
