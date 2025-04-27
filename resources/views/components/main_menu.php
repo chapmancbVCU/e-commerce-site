@@ -7,6 +7,7 @@ $profileImage = Helper::getProfileImage();
 $menu = Router::getMenu('menu_acl');
 $userMenu = Router::getMenu('user_menu');
 $cartItemCount = Carts::itemCountCurrentCart();
+$cartActive = (Helper::currentPage() == Env::get('APP_DOMAIN').'cart') ? " active" : "";
 ?>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark bg-gradient sticky-top mb-5">
   <!-- Brand and toggle get grouped for better mobile display -->
@@ -24,7 +25,7 @@ $cartItemCount = Carts::itemCountCurrentCart();
       <?php if($cartItemCount > 0): ?>
       <li class="nav-item nav-cart">
         <span class="nav-badge"><?=$cartItemCount?></span>
-        <a href="<?=Env::get("APP_DOMAIN")?>cart" class="nav-link"><i class="fas fa-shopping-cart"></i></a>
+        <a href="<?=Env::get("APP_DOMAIN")?>cart" class="nav-link<?=$cartActive?>"><i class="fas fa-shopping-cart"></i></a>
       </li>
       <?php endif; ?>
       <?= Helper::buildMenuListItems($userMenu, "dropdown-menu-end"); ?>
