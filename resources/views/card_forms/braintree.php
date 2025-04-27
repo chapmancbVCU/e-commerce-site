@@ -28,8 +28,8 @@
             <label for="card-element" class="control-label">
                     Credit or debit card
             </label>
-            
-            <div id="dropin-container"></div>
+
+            <div id="card-element"></div>
 
             <div class="col-md-12">
                     <button class="btn btn-lg btn-primary">Submit Payment</button>
@@ -47,7 +47,7 @@
 
     braintree.dropin.create({
         authorization: '<?=$this->gatewayToken?>',
-        container: '#dropin-container'
+        container: '#card-element'
     }, (error, dropinInstance) => {
         if (error) console.error(error);
 
