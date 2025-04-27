@@ -34,5 +34,10 @@ use Core\Lib\Utilities\Env;
     'gateway' => Env::get('GATEWAY'),
 
     'stripe_public' => Env::get('STRIPE_PUBLIC'),
-    'stripe_private' => Env::get('STRIPE_PRIVATE')
+    'stripe_private' => Env::get('STRIPE_PRIVATE'),
+
+    'braintree_merchant_id' => Env::get('BRAINTREE_MERCHANT_ID'),
+    'braintree_env' => Env::get('BRAINTREE_ENV'),
+    'braintree_public' => Env::get('BRAINTREE_PUBLIC'),
+    'braintree_private' => Env::get('BRAINTREE_PRIVATE')
  ];
