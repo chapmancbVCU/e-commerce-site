@@ -25,6 +25,10 @@
             <?= Forms::hidden('shipping_state', $this->tx->shipping_state) ?>
             <?= Forms::hidden('shipping_zip', $this->tx->shipping_zip) ?>
             
+            <label for="card-element" class="control-label">
+                    Credit or debit card
+            </label>
+            
             <div id="dropin-container"></div>
 
             <div class="col-md-12">
