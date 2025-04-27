@@ -27,4 +27,17 @@ class BraintreeGateway extends AbstractGateway {
     public function createTransaction($ch) {
 
     }
+
+    public function getToken()
+    {
+        $gw = new Gateway([
+            'environment' => Env::get('BRAINTREE_ENV'),
+            'merchantId' => Env::get('BRAINTREE_MERCHANT_ID'),
+            'publicKey' => Env::get('BRAINTREE_PUBLIC'),
+            'privateKey' => Env::get('BRAINTREE_PRIVATE')
+        ]);
+
+        $token = $gw->clientToken()->generate();
+        return $token;
+    }
 }
