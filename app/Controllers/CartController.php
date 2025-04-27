@@ -91,7 +91,7 @@ class CartController extends Controller {
             if($step == '2') {
                 $resp = $gw->processForm($this->request->get());
                 $tx = $resp['tx'];
-                if(!$resp['success']) {
+                if($resp['success'] != true) {
                     $tx->addErrorMessage('card-element', $resp['msg']);
                 } else {
                     Router::redirect('cart/thankYou/' . $tx->id);
