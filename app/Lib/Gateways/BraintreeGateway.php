@@ -29,7 +29,6 @@ class BraintreeGateway extends AbstractGateway {
             'tx' => $tx,
             'charge_id' => $ch->transaction->id
         ];
-        // dd($ch);
     }
 
     public function charge($data) {
