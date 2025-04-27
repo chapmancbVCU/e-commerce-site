@@ -1,10 +1,12 @@
 <?php
 use Core\Helper;
 use Core\Router;
+use App\Models\Carts;
 use Core\Lib\Utilities\Env;
 $profileImage = Helper::getProfileImage();
 $menu = Router::getMenu('menu_acl');
 $userMenu = Router::getMenu('user_menu');
+$cartItemCount = Carts::itemCountCurrentCart();
 ?>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark bg-gradient sticky-top mb-5">
   <!-- Brand and toggle get grouped for better mobile display -->
@@ -19,6 +21,12 @@ $userMenu = Router::getMenu('user_menu');
       <?= Helper::buildMenuListItems($menu); ?>
     </ul>
     <ul class="navbar-nav me-2 align-items-center"> <!-- Align items vertically -->
+      <?php if($cartItemCount > 0): ?>
+      <li class="nav-item nav-cart">
+        <span class="nav-badge"><?=$cartItemCount?></span>
+        <a href="<?=Env::get("APP_DOMAIN")?>cart" class="nav-link"><i class="fas fa-shopping-cart"></i></a>
+      </li>
+      <?php endif; ?>
       <?= Helper::buildMenuListItems($userMenu, "dropdown-menu-end"); ?>
       <li class="nav-item">
         <a class="nav-link p-0" href="<?=Env::get('APP_DOMAIN', '/')?>profile">

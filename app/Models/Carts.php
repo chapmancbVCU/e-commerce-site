@@ -1,5 +1,6 @@
 <?php
 namespace App\Models;
+use Core\DB;
 use Core\Model;
 use Core\Cookie;
 use Core\Lib\Utilities\Env;
@@ -75,6 +76,18 @@ class Carts extends Model {
         $cart->save();
         Cookie::delete(Env::get('CART_COOKIE_NAME'));
         return $cart;
+    }
+
+    public static function itemCountCurrentCart() {
+        if(!Cookie::exists(Env::get('CART_COOKIE_NAME'))) {
+            return 0;
+        }
+
+        $cart_id = Cookie::get(Env::get('CART_COOKIE_NAME'));
+        $db = DB::getInstance();
+        $sql = "SELECT SUM(qty) as qty FROM cart_items WHERE cart_id = ? AND deleted = 0";
+        $result = $db->query($sql, [(int)$cart_id])->first();
+        return $result->qty;
     }
 
     /**
