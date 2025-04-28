@@ -1,5 +1,6 @@
 <?php
 namespace App\Models;
+use Core\DB;
 use Core\Model;
 use Core\Validators\RequiredValidator;
 
@@ -53,6 +54,18 @@ class Transactions extends Model {
 
     public function beforeSave(): void {
         $this->timeStamps();
+    }
+
+    public static function getDailySales($range = 'last-28') {
+        $today = date("Y-m-d");
+        $range = str_replace("last-", "", $range);
+        $fromDate = date("Y-m-d", strtotime("-".$range." days"));
+        $db = DB::getInstance();
+        $sql = "SELECT DATE(created_at) as created_at, SUM(amount) as amount 
+            FROM `transactions` 
+            WHERE success = 1 AND created_at BETWEEN ? and ?
+            GROUP BY DATE(created_at)";
+        return $db->query($sql, [$fromDate, $today." 23:59:59"])->results();
     }
 
     public function validateShipping() {
