@@ -1,8 +1,9 @@
 <?php
 namespace App\Controllers;
-use Core\Controller;
-use App\Models\Products;
 use Core\DB;
+use Core\Controller;
+use App\Models\Brands;
+use App\Models\Products;
 
 /**
  * Implements support for our Home controller.  Functions found in this class 
@@ -20,14 +21,34 @@ class HomeController extends Controller {
         //     "UPDATE users SET acl = json_insert(acl, '\$[#]', ?) WHERE id = ?",
         //     ['VendorAdmin', 1]
         // );
-        $products = Products::featuredProducts();
 
-        $this->view->min_price = '';
-        $this->view->max_price = '';
-        $this->view->brand = '';
-        $this->view->brandOptions = [];
-        $this->view->search = '';
+        $search = $this->request->get('search');
+        $brand = $this->request->get('brand');
+        $min_price = $this->request->get('min_price');
+        $max_price = $this->request->get('max_price');
+        $options = [
+            'search'  => $search,
+            'min_price' => $min_price,
+            'max_price' => $max_price,
+            'brand' => $brand
+        ];
+
+        $products = Products::featuredProducts($options);
+
+        $this->view->hasFilters = $this->hasFilters($options);
+        $this->view->min_price = $min_price;
+        $this->view->max_price = $max_price;
+        $this->view->brand = $brand;
+        $this->view->brandOptions = Brands::getOptionsForForm();
+        $this->view->search = $search;
         $this->view->products = $products;
         $this->view->render('home/index');
+    }
+
+    private function hasFilters($options) {
+        foreach($options as $key => $value) {
+            if(!empty($value)) return true;
+        }
+        return false;
     }
 }

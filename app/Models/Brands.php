@@ -51,13 +51,18 @@ class Brands extends Model {
         ]);
     }
 
-    public static function getOptionsForForm($user_id) {
-        $brands = self::find([
+    public static function getOptionsForForm($user_id = '') {
+        $params = [
             'columns' => 'id, name',
-            'conditions' => 'user_id = ?',
-            'bind' => [$user_id],
             'order' => 'name'
-        ]);
+        ];
+
+        if(!empty($user_id)) {
+            $params['conditions'] = "user_id = ?";
+            $params['bind'] = $user_id;
+        }
+
+        $brands = self::find($params);
 
         $brandsAry = ['' => '-Select Brand-'];
         foreach($brands as $brand) {

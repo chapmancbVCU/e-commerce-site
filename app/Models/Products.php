@@ -74,7 +74,35 @@ class Products extends Model {
         return $this->featured == "on";
     }
 
-    public static function featuredProducts() {
+    public static function featuredProducts($options) {
+        $where = "products.deleted = 0 AND pi.sort = '0'";
+        if(!self::hasFilters($options)) {
+            $where .= " AND products.featured = '1'";
+        }
+
+        $binds = [];
+        
+        if(Arr::exists($options, 'brand') && !empty($options['brand'])) {
+            $where .= " AND brands.id = ?";
+            $binds[] = $options['brand'];
+        }
+
+        if(Arr::exists($options, 'min_price') && !empty($options['min_price'])) {
+            $where .= " AND products.price >= ?";
+            $binds[] = $options['min_price'];
+        }
+
+        if(Arr::exists($options, 'max_price') && !empty($options['max_price'])) {
+            $where .= " AND products.price <= ?";
+            $binds[] = $options['max_price'];
+        }
+
+        if(Arr::exists($options, 'search') && !empty($options['search'])) {
+            $where .= " AND (products.name LIKE ? OR brands.name LIKE ?)";
+            $binds[] = "%" . $options['search'] . "%";
+            $binds[] = "%" . $options['search'] . "%";
+        }
+
         $dbDriver = DB::getInstance()->getPDO()->getAttribute(\PDO::ATTR_DRIVER_NAME);
         // Use ANY_VALUE in MySQL to avoid ONLY_FULL_GROUP_BY issues
         $urlColumn = $dbDriver === 'mysql' ? 'ANY_VALUE(pi.url)' : 'pi.url';
@@ -86,13 +114,21 @@ class Products extends Model {
                 ['product_images', 'products.id = pi.product_id', 'pi'],
                 ['brands', 'products.brand_id = brands.id']
             ],
-            'conditions' => 'products.featured = 1 AND products.deleted = 0 AND pi.sort = 0',
-            'group' => 'products.id'
+            'conditions' => "{$where}",
+            'group' => 'products.id',
+            'bind' => $binds
         ];
 
         return self::find($conditions);
     }
     
+    protected static function hasFilters($options) {
+        foreach($options as $key => $value) {
+            if(!empty($value)) return true;
+        }
+        return false;
+    }
+
     public function getBrandName() {
         if(empty($this->brand_id)) return "";
 

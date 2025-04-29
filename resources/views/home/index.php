@@ -1,10 +1,12 @@
 <?php use Core\Lib\Utilities\Env; ?>
 <?php use Core\FormHelper as Forms; ?>
+<?php $openClass = $this->hasFilters ? " open" : ""; ?>
+<?php $openIcon = $this->hasFilters ? "fa-chevron-left" : "fa-search"; ?>
 <?php $this->start('body'); ?>
 
-<div class="d-flex two-column-wrapper" id="two-column-wrapper">
+<div class="d-flex two-column-wrapper <?=$openClass?>" id="two-column-wrapper">
   <div id="expand-filters">
-    <i id="toggleIcon" class="fas fa-search"></i>
+    <i id="toggleIcon" class="fas <?=$openIcon?>"></i>
   </div>  
 
   <aside class="filters-wrapper">
@@ -24,7 +26,7 @@
       </div>
 
       <div class="row mt-3">
-        <button class="btn btn-info col-12 w-100">Search</button>
+        <button class="btn btn-info col-12">Search</button>
       </div>
     </form>
   </aside>
