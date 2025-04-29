@@ -21,6 +21,12 @@ class HomeController extends Controller {
         //     ['VendorAdmin', 1]
         // );
         $products = Products::featuredProducts();
+
+        $this->view->min_price = '';
+        $this->view->max_price = '';
+        $this->view->brand = '';
+        $this->view->brandOptions = [];
+        $this->view->search = '';
         $this->view->products = $products;
         $this->view->render('home/index');
     }
