@@ -35,7 +35,7 @@ class HomeController extends Controller {
 
         $products = Products::featuredProducts($options);
 
-        $this->view->hasFilters = $this->hasFilters($options);
+        $this->view->hasFilters = Products::hasFilters($options);
         $this->view->min_price = $min_price;
         $this->view->max_price = $max_price;
         $this->view->brand = $brand;
@@ -43,12 +43,5 @@ class HomeController extends Controller {
         $this->view->search = $search;
         $this->view->products = $products;
         $this->view->render('home/index');
-    }
-
-    private function hasFilters($options) {
-        foreach($options as $key => $value) {
-            if(!empty($value)) return true;
-        }
-        return false;
     }
 }

@@ -116,15 +116,15 @@ class Products extends Model {
             ],
             'conditions' => "{$where}",
             'group' => 'products.id',
-            'bind' => $binds
+            'bind' => $binds,
         ];
 
         return self::find($conditions);
     }
     
-    protected static function hasFilters($options) {
+    public static function hasFilters($options) {
         foreach($options as $key => $value) {
-            if(!empty($value)) return true;
+            if(!empty($value) && $key != 'limit' && $key !='offset') return true;
         }
         return false;
     }
