@@ -79,59 +79,55 @@ class Products extends Model {
         $limit = (Arr::exists($options, 'limit') && !empty($options['limit'])) ? $options['limit'] : 4;
         $offset = (Arr::exists($options, 'offset') && !empty($options['offset'])) ? $options['offset'] : 0;
         $where = "products.deleted = 0 AND pi.sort = '0'";
-        if(!self::hasFilters($options)){
-            $where .= " AND products.featured = '1'";
-        }
-
+        $hasFilters = self::hasFilters($options);
+    
         $binds = [];
         if(Arr::exists($options, 'brand') && !empty($options['brand'])) {
             $where .= " AND brands.id = ?";
             $binds[] = $options['brand'];
         }
-
+    
         if(Arr::exists($options, 'min_price') && !empty($options['min_price'])) {
             $where .= " AND products.price >= ?";
             $binds[] = $options['min_price'];
         }
-
+    
         if(Arr::exists($options, 'max_price') && !empty($options['max_price'])) {
             $where .= " AND products.price <= ?";
             $binds[] = $options['max_price'];
         }
-
+    
         if(Arr::exists($options, 'search') && !empty($options['search'])) {
             $where .= " AND (products.name LIKE ? OR brands.name LIKE ?)";
             $binds[] = "%" . $options['search'] . "%";
             $binds[] = "%" . $options['search'] . "%";
         }
-
+    
         $dbDriver = DB::getInstance()->getPDO()->getAttribute(\PDO::ATTR_DRIVER_NAME);
-        // Use ANY_VALUE in MySQL to avoid ONLY_FULL_GROUP_BY issues
         $urlColumn = $dbDriver === 'mysql' ? 'ANY_VALUE(pi.url)' : 'pi.url';
         $brandColumn = $dbDriver === 'mysql' ? 'ANY_VALUE(brands.name)' : 'brands.name';
-
-        
-        $select = "SELECT COUNT(*) as total";
-
-        $sql = " FROM products
-            JOIN product_images as pi
-            ON products.id = pi.product_id
-            JOIN brands
-            on products.brand_id = brands.id
-            WHERE {$where}
-            ";
-
-        $total = $db->query($select . $sql, $binds)->first()->total;
-
-        $select = "SELECT products.*, {$urlColumn} as url, {$brandColumn} as brand";
+    
+        $sql = "SELECT products.*, {$urlColumn} as url, {$brandColumn} as brand
+            FROM products
+            JOIN product_images as pi ON products.id = pi.product_id
+            JOIN brands ON products.brand_id = brands.id
+            WHERE {$where}";
+    
+        $group = ($hasFilters)
+            ? " GROUP BY products.id ORDER BY products.name"
+            : " GROUP BY products.id ORDER BY products.featured DESC";
+    
+        // ✅ Don't use LIMIT/OFFSET binds for total
+        $total = $db->query($sql . $group, $binds)->count();
+    
+        // ✅ Add LIMIT/OFFSET binds only for results
         $pager = " LIMIT ? OFFSET ?";
-        $binds[] = $limit;
-        $binds[] = $offset;
-
-        $results = $db->query($select . $sql . $pager, $binds)->results();
-
+        $resultBinds = array_merge($binds, [$limit, $offset]);
+        $results = $db->query($sql . $group . $pager, $resultBinds)->results();
+    
         return ['results' => $results, 'total' => $total];
     }
+    
     
     public static function hasFilters($options) {
         foreach($options as $key => $value) {
