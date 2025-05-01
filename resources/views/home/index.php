@@ -10,7 +10,7 @@
   </div>  
 
   <aside class="filters-wrapper">
-    <form action="" method="post" autocomplete="off">
+    <form id="filter-form" action="" method="post" autocomplete="off">
       <div class="form-group">
         <label for="search" class="sr-only">Search</label>
         <div class="input-group">
@@ -20,13 +20,16 @@
       </div>
 
       <div class="row">
+        <?= Forms::hidden('page', $this->page) ?>
         <?= Forms::selectBlock('Brand', 'brand', $this->brand, $this->brandOptions, ['class' => 'form-control form-control-sm'], ['class' => 'form-group col-12']) ?>
         <?= Forms::inputBlock('number', 'Price Min', 'min_price', $this->min_price, ['class' => 'form-control form-control-sm', 'step' => 'any'], ['class' => 'form-group col-6']) ?>
         <?= Forms::inputBlock('number', 'Price Max', 'max_price', $this->max_price, ['class' => 'form-control form-control-sm', 'step' => 'any'], ['class' => 'form-group col-6']) ?>
       </div>
 
       <div class="row mt-3">
-        <button class="btn btn-info col-12">Search</button>
+        <div class="col-12">
+          <button class="btn btn-info w-100">Search</button>
+        </div>
       </div>
     </form>
   </aside>
@@ -47,6 +50,13 @@
         </div>
       </div>
     <?php endforeach; ?>
+    <div class="d-flex justify-content-center align-items-center mt-3 w-100">
+      <?php $disableBack = ($this->page == 1)? ' disabled="disabled"' : ''; ?>
+      <?php $disableNext = ($this->page == $this->totalPages)? ' disabled="disabled"' : ''; ?>
+      <button class="btn btn-light mr-3" <?=$disableBack?> onclick="pager('back')"><i class="fas fa-chevron-left"></i></button>
+      <?=$this->page?> of <?=$this->totalPages?>
+      <button class="btn btn-light ml-3" <?=$disableNext?> onclick="pager('next')"><i class="fas fa-chevron-right"></i></button>
+    </div>
   </main>
 </div>
 
@@ -63,6 +73,15 @@
       toggleIcon.classList.remove('fa-chevron-left');
       toggleIcon.classList.add('fa-search');
     }
+  }
+
+  function pager(direction) {
+    let form = document.getElementById('filter-form');
+    let input = document.getElementById('page');
+    let page = parseInt(input.value, 10);
+    let newPageValue = (direction === 'next') ? page + 1 : page - 1;
+    input.value = newPageValue;
+    form.submit();
   }
 
   document.getElementById('expand-filters').addEventListener('click', toggleExpandFilters);

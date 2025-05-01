@@ -75,13 +75,15 @@ class Products extends Model {
     }
 
     public static function featuredProducts($options) {
+        $db = DB::getInstance();
+        $limit = (Arr::exists($options, 'limit') && !empty($options['limit'])) ? $options['limit'] : 4;
+        $offset = (Arr::exists($options, 'offset') && !empty($options['offset'])) ? $options['offset'] : 0;
         $where = "products.deleted = 0 AND pi.sort = '0'";
-        if(!self::hasFilters($options)) {
+        if(!self::hasFilters($options)){
             $where .= " AND products.featured = '1'";
         }
 
         $binds = [];
-        
         if(Arr::exists($options, 'brand') && !empty($options['brand'])) {
             $where .= " AND brands.id = ?";
             $binds[] = $options['brand'];
@@ -108,23 +110,32 @@ class Products extends Model {
         $urlColumn = $dbDriver === 'mysql' ? 'ANY_VALUE(pi.url)' : 'pi.url';
         $brandColumn = $dbDriver === 'mysql' ? 'ANY_VALUE(brands.name)' : 'brands.name';
 
-        $conditions = [
-            'columns' => "products.*, {$urlColumn} AS url, {$brandColumn} AS brand",
-            'joins' => [
-                ['product_images', 'products.id = pi.product_id', 'pi'],
-                ['brands', 'products.brand_id = brands.id']
-            ],
-            'conditions' => "{$where}",
-            'group' => 'products.id',
-            'bind' => $binds,
-        ];
+        
+        $select = "SELECT COUNT(*) as total";
 
-        return self::find($conditions);
+        $sql = " FROM products
+            JOIN product_images as pi
+            ON products.id = pi.product_id
+            JOIN brands
+            on products.brand_id = brands.id
+            WHERE {$where}
+            ";
+
+        $total = $db->query($select . $sql, $binds)->first()->total;
+
+        $select = "SELECT products.*, {$urlColumn} as url, {$brandColumn} as brand";
+        $pager = " LIMIT ? OFFSET ?";
+        $binds[] = $limit;
+        $binds[] = $offset;
+
+        $results = $db->query($select . $sql . $pager, $binds)->results();
+
+        return ['results' => $results, 'total' => $total];
     }
     
     public static function hasFilters($options) {
         foreach($options as $key => $value) {
-            if(!empty($value) && $key != 'limit' && $key !='offset') return true;
+            if(!empty($value) && $key != 'limit' && $key != 'offset') return true;
         }
         return false;
     }
