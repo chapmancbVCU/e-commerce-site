@@ -4,8 +4,9 @@
     "Vendor Dashboard" : "vendordashboard/index",
     "Products" : {
         "View Products" : "vendorproducts/index",
+        "Add Product" : "vendorproducts/add",
         "separator" : "",
-        "Add Product" : "vendorproducts/add"
+        "Options" : "vendorproducts/options"
     },
     "Brands"  : "adminbrands/index"
 }      
