@@ -6,6 +6,7 @@ use Core\Session;
 use Core\Controller;
 use App\Models\Users;
 use App\Models\Brands;
+use App\Models\Options;
 use App\Models\Products;
 use Core\Lib\Utilities\Env;
 use Core\Lib\Utilities\Str;
@@ -167,6 +168,9 @@ class VendorproductsController extends Controller {
     }
 
     function optionsAction() {
+        $this->view->options = Options::find([
+            'order' => 'name'
+        ]);
         $this->view->render('vendorproducts/options');
     }
 }
