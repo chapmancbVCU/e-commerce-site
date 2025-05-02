@@ -71,7 +71,7 @@ class Products extends Model {
     }
 
     public function isChecked() {
-        return $this->featured == "on";
+        return $this->featured == 1;
     }
 
     public static function featuredProducts($options) {
