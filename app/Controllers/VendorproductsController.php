@@ -165,4 +165,8 @@ class VendorproductsController extends Controller {
         }
         $this->jsonResponse($resp);
     }
+
+    function optionsAction() {
+        $this->view->render('vendorproducts/options');
+    }
 }
