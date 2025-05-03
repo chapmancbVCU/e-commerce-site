@@ -35,6 +35,8 @@ class Products extends Model {
     public $user_id;
     public $featured = 0;
     public $brand_id = 0;
+    public $has_options = 0;
+    public $inventory = 0;
 
     public function afterDelete(): void {
         //
@@ -72,6 +74,10 @@ class Products extends Model {
 
     public function isChecked() {
         return $this->featured === 1;
+    }
+
+    public function hasOptions() {
+        return $this->has_options === 1;
     }
 
     public static function featuredProducts($options) {
