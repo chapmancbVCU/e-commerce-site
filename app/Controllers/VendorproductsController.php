@@ -194,7 +194,7 @@ class VendorproductsController extends Controller {
         if($this->request->isPost()) {
             $this->request->csrfCheck();
             $id = $this->request->get('id');
-            $option = Options::findById($id);
+            $option = Options::findById((int)$id);
             if($option) {
                 $option->delete();
                 Session::addMessage('success', 'Option deleted');
