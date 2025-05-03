@@ -1,6 +1,10 @@
 <?php
 namespace App\Models;
 use Core\Model;
+use Core\Validators\{
+    RequiredValidator as Required,
+    UniqueValidator as Unique
+};
 
 /**
  * Implements features of the Options class.
@@ -20,7 +24,7 @@ class Options extends Model {
     public $id;
     public $name;
     public $deleted = 0;
-    
+
     public function afterDelete(): void {
         // Implement your function
     }
@@ -43,6 +47,7 @@ class Options extends Model {
      * @return void
      */
     public function validator(): void {
-        // Implement your function
+        $this->runValidation(new Required($this, ['field' => 'name', 'message' => 'Option Name is required']));
+        $this->runValidation(new Unique($this, ['field' => ['name', 'deleted'], 'message' => 'That option already exists']));
     }
 }
