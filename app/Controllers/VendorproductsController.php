@@ -167,10 +167,39 @@ class VendorproductsController extends Controller {
         $this->jsonResponse($resp);
     }
 
-    function optionsAction() {
+    public function optionsAction() {
         $this->view->options = Options::find([
             'order' => 'name'
         ]);
         $this->view->render('vendorproducts/options');
+    }
+
+    public function editOptionAction($id) {
+        $option = ($id == 'new') ? new Options() : Options::findById((int)$id);
+        if($this->request->isPost()) {
+            $this->request->csrfCheck();
+            $option->name = $this->request->get('name');
+            if($option->save()) {
+                Session::addMessage('success', 'Option Saved');
+                Router::redirect('vendorproducts/options');
+            }
+        }
+        $this->view->option = $option;
+        $this->view->header = ($id == 'new')? "Add Product Option" : "Edit Product Option";
+        $this->view->displayErrors = $option->getErrorMessages();
+        $this->view->render('vendorproducts/edit_options');
+    }
+
+    public function deleteOptionAction() {
+        if($this->request->isPost()) {
+            $this->request->csrfCheck();
+            $id = $this->request->get('id');
+            $option = Options::findById($id);
+            if($option) {
+                $option->delete();
+                Session::addMessage('success', 'Option deleted');
+            }
+        }
+        Router::redirect('vendorproducts/options');
     }
 }
