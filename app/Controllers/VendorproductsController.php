@@ -53,6 +53,7 @@ class VendorproductsController extends Controller {
             );
             $product->assign($this->request->get(), Products::blackList);
             $product->featured = ($this->request->get('featured') == 'on') ? 1 : 0;
+            $product->has_options = ($this->request->get('has_options') == 'on') ? 1 : 0;
             $product->user_id = $this->user->id;
             $product->save();
             if($product->validationPassed()) {
@@ -97,6 +98,7 @@ class VendorproductsController extends Controller {
 
             $product->assign($this->request->get(), Products::blackList);
             $product->featured = ($this->request->get('featured') == 'on') ? 1 : 0;
+            $product->has_options = ($this->request->get('has_options') == 'on') ? 1 : 0;
             $product->user_id = $this->user->id;
             $product->save();
 
