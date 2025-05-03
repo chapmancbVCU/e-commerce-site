@@ -1,4 +1,7 @@
-<?php use Core\Lib\Utilities\Env; ?>
+<?php
+
+use Core\FormHelper;
+use Core\Lib\Utilities\Env; ?>
 <?php $this->setSiteTitle($this->product->name); ?>
 
 <!-- Head content between these two function calls.  Remove if not needed. -->
@@ -53,12 +56,25 @@
             <?php endif; ?>
             <?=$this->product->displayShipping()?>
         </div>
-        <div class="product-details-body"><?=html_entity_decode($this->product->description)?></div>
-        <div>
-            <a href="<?=Env::get('APP_DOMAIN')?>cart/addToCart/<?=$this->product->id?>" class="btn btn-info">
-                <i class="fas fa-cart-plus p-2"></i>Add to Shopping Cart
-            </a>
-        </div>
+        <form action="<?=Env::get('APP_DOMAIN')?>cart/addToCart/<?=$this->product->id?>" method="post">
+            <?= FormHelper::csrfInput() ?>
+            <?php if($this->product->hasOptions()): ?>
+                <div class="col-6 mt-2 mb-2">
+                    <select name="option_id" id="option_id" class="form-control form-control-sm">
+                        <option>-Choose Option-</option>
+                        <?php foreach($this->options as $option): ?>
+                            <option value="<?=$option->id?>"><?=$option->name?> (<?=$option->inventory?> available)</option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+            <?php endif; ?>
+            <div class="product-details-body"><?=html_entity_decode($this->product->description)?></div>
+            <div>
+                <button class="btn btn-info">
+                    <i class="fas fa-cart-plus p-2"></i>Add to Shopping Cart
+                </button>
+            </div>
+        </form>
     </div>
 </div>
 <?php $this->end(); ?>

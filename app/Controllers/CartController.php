@@ -48,11 +48,20 @@ class CartController extends Controller {
     }
 
     public function addToCartAction($product_id) {
-        $cart = Carts::findCurrentCartOrCreateNew((int)$product_id);
-        $item = CartItems::addProductToCart((int)$cart->id, (int)$product_id);
-        $item->qty = $item->qty + 1;
-        $item->save();
-        $this->view->render('cart/addToCart');
+        if($this->request->isPost()) {
+            $this->request->csrfCheck();
+            $cart = Carts::findCurrentCartOrCreateNew((int)$product_id);
+            $item = CartItems::addProductToCart((int)$cart->id, (int)$product_id, (int)$this->request->get('option_id'));
+            $errors = $item->getErrorMessages();
+            if(empty($errors)) {
+                $item->qty = $item->qty + 1;
+                $item->save();
+            } else {
+                Session::addMessage('danger', 'You must choose an option');
+                Router::redirect('products/details/'.$product_id);
+            }
+            $this->view->render('cart/addToCart');
+        }
     }
 
     public function changeQtyAction($direction, $item_id) {

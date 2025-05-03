@@ -26,6 +26,7 @@ class ProductsController extends Controller {
             Router::redirect('home');
         }
 
+        $this->view->options = $product->getOptions();
         $this->view->images = $product->getImages();
         $this->view->product = $product;
         $this->view->render('products/details');

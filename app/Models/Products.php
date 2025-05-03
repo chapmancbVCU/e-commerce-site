@@ -80,6 +80,17 @@ class Products extends Model {
         return $this->has_options === 1;
     }
 
+    public function getOptions() {
+        if(!$this->hasOptions()) return [];
+        $sql = "SELECT options.id, options.name, refs.inventory
+            FROM options
+            JOIN product_option_refs as refs ON options.id = refs.option_id
+            WHERE refs.product_id = ? AND refs.inventory > 0
+        ";
+
+        return DB::getInstance()->query($sql, [$this->id])->results();
+    }
+
     public static function featuredProducts($options) {
         $db = DB::getInstance();
         $limit = (Arr::exists($options, 'limit') && !empty($options['limit'])) ? $options['limit'] : 4;
