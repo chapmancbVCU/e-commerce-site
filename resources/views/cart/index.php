@@ -25,7 +25,7 @@
                         <img src="<?=Env::get('APP_DOMAIN') . $item->url?>" alt="<?=$item->name?>">
                     </div>
                     <div class="shopping-cart-item-name">
-                        <a href="<?=Env::get('APP_DOMAIN')?>products/details/<?=$item->id?>" title="<?=$item->name?>">
+                        <a href="<?=Env::get('APP_DOMAIN')?>products/details/<?=$item->product_id?>" title="<?=$item->name?>">
                             <?=$item->name?>
                         </a>
                         <p>by <?= $item->brand?> <p>
