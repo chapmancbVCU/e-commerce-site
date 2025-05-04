@@ -36,7 +36,7 @@ class ProductOptionRefs extends Model {
     }
 
     public function beforeSave(): void {
-        // Implement your function
+        $this->timeStamps();
     }
 
     public static function findOrCreate($product_id, $option_id) {
