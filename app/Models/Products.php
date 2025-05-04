@@ -95,7 +95,7 @@ class Products extends Model {
         $db = DB::getInstance();
         $limit = (Arr::exists($options, 'limit') && !empty($options['limit'])) ? $options['limit'] : 4;
         $offset = (Arr::exists($options, 'offset') && !empty($options['offset'])) ? $options['offset'] : 0;
-        $where = "products.deleted = 0 AND pi.sort = '0'";
+        $where = "products.deleted = 0 AND pi.sort = '0' AND pi.deleted = 0 AND products.inventory > 0";
         $hasFilters = self::hasFilters($options);
     
         $binds = [];
@@ -121,8 +121,8 @@ class Products extends Model {
         }
     
         $dbDriver = DB::getInstance()->getPDO()->getAttribute(\PDO::ATTR_DRIVER_NAME);
-        $urlColumn = $dbDriver === 'mysql' ? 'ANY_VALUE(pi.url)' : 'pi.url';
-        $brandColumn = $dbDriver === 'mysql' ? 'ANY_VALUE(brands.name)' : 'brands.name';
+        $urlColumn = ($dbDriver === 'mysql' || $dbDriver === 'mariadb') ? 'ANY_VALUE(pi.url)' : 'pi.url';
+        $brandColumn = ($dbDriver === 'mysql' || $dbDriver === 'mariadb') ? 'ANY_VALUE(brands.name)' : 'brands.name';
     
         $sql = "SELECT products.*, {$urlColumn} as url, {$brandColumn} as brand
             FROM products

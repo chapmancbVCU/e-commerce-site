@@ -63,12 +63,27 @@ class CartItems extends Model {
             $item = self::findByProductIdOrCreate($cart_id, $product_id, $option_id);
             
             // validate to make sure there is an option selected if necessary
+            if($item->qty >= $item->qtyAvailable()) {
+                $item->addErrorMessage('option_id', 'You have reached the maximum available');
+            }
+
             if($product->hasOptions() && empty($option_id)) {
                 
                 $item->addErrorMessage('option_id', 'You must choose an option.');
             }
         }
         return $item;
+    }
+
+    public function qtyAvailable() {
+        $available = 0;
+        $model = (!empty($this->option_id)) ? 
+            ProductOptionRefs::findByProductId($this->product_id, $this->option_id) : 
+            Products::findById($this->product_id);
+        if($model) {
+            $available = $model->inventory;
+        }
+        return $available;
     }
 
     /**

@@ -1,6 +1,6 @@
 <?php
 namespace App\Models;
-use Core\Model;
+use Core\{DB, Model};
 use Core\Validators\{
     RequiredValidator as Required,
     UniqueValidator as Unique
@@ -39,6 +39,17 @@ class Options extends Model {
 
     public function beforeSave(): void {
         // Implement your function
+    }
+
+    public static function getOptionsByProductId($id) {
+        if($id == 'new') return [];
+        $sql = "SELECT options.*, refs.inventory 
+            FROM options
+            JOIN product_option_refs as refs ON options.id = refs.option_id
+            WHERE refs.product_id = ?
+        ";
+
+        return DB::getInstance()->query($sql, [$id])->results();
     }
 
     /**
