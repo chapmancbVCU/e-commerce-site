@@ -57,7 +57,7 @@ class CartController extends Controller {
                 $item->qty = $item->qty + 1;
                 $item->save();
             } else {
-                Session::addMessage('danger', 'You must choose an option');
+                Session::addMessage('danger', $errors['option_id']);
                 Router::redirect('products/details/'.$product_id);
             }
             $this->view->render('cart/addToCart');

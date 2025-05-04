@@ -26,7 +26,12 @@ class ProductsController extends Controller {
             Router::redirect('home');
         }
 
-        $this->view->options = $product->getOptions();
+        $options = $product->getOptions();
+        $selectOptions = ['' => '- Choose an Option -'];
+        foreach($options as $option) {
+            $selectOptions[$option->id] = $option->name . ' ('.$option->inventory.' available)'; 
+        }
+        $this->view->selectOptions = $selectOptions;
         $this->view->images = $product->getImages();
         $this->view->product = $product;
         $this->view->render('products/details');

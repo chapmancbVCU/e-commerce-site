@@ -4,7 +4,7 @@
     "Vendor Dashboard" : "vendordashboard/index",
     "Products" : {
         "View Products" : "vendorproducts/index",
-        "Add Product" : "vendorproducts/add",
+        "Add Product" : "vendorproducts/edit/new",
         "separator" : "",
         "Options" : "vendorproducts/options"
     },

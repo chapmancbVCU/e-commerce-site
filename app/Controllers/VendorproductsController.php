@@ -11,6 +11,7 @@ use App\Models\Products;
 use Core\Lib\Utilities\Env;
 use Core\Lib\Utilities\Str;
 use App\Models\ProductImages;
+use App\Models\ProductOptionRefs;
 use Core\Lib\FileSystem\Uploads;
 
 /**
@@ -32,49 +33,49 @@ class VendorproductsController extends Controller {
         $this->view->render('vendorproducts/index');
     }
 
-    public function addAction() {
-        $product = new Products();
+    // public function addAction() {
+    //     $product = new Products();
         
-        if($this->request->isPost()) {
-            $this->request->csrfCheck();
+    //     if($this->request->isPost()) {
+    //         $this->request->csrfCheck();
 
-            if(Str::isEmpty($_FILES['productImages']['tmp_name'][0])) {
-                $product->addErrorMessage('productImages', 'You must choose an image');
-            }
-            // Handle file upload.
-            $uploads = Uploads::handleUpload(
-                $_FILES['productImages'],
-                ProductImages::class,
-                ROOT . DS,
-                "5mb",
-                $product,
-                'productImages',
-                Uploads::MULTIPLE
-            );
-            $product->assign($this->request->get(), Products::blackList);
-            $product->featured = ($this->request->get('featured') == 'on') ? 1 : 0;
-            $product->has_options = ($this->request->get('has_options') == 'on') ? 1 : 0;
-            $product->user_id = $this->user->id;
-            $product->save();
-            if($product->validationPassed()) {
-                if($uploads) {
-                    ProductImages::uploadProductImage($product->id, $uploads);
-                    Session::addMessage('success', "Product added!");
-                }
-                Router::redirect('vendorproducts/index');
-            }
-        }
+    //         if(Str::isEmpty($_FILES['productImages']['tmp_name'][0])) {
+    //             $product->addErrorMessage('productImages', 'You must choose an image');
+    //         }
+    //         // Handle file upload.
+    //         $uploads = Uploads::handleUpload(
+    //             $_FILES['productImages'],
+    //             ProductImages::class,
+    //             ROOT . DS,
+    //             "5mb",
+    //             $product,
+    //             'productImages',
+    //             Uploads::MULTIPLE
+    //         );
+    //         $product->assign($this->request->get(), Products::blackList);
+    //         $product->featured = ($this->request->get('featured') == 'on') ? 1 : 0;
+    //         $product->has_options = ($this->request->get('has_options') == 'on') ? 1 : 0;
+    //         $product->user_id = $this->user->id;
+    //         $product->save();
+    //         if($product->validationPassed()) {
+    //             if($uploads) {
+    //                 ProductImages::uploadProductImage($product->id, $uploads);
+    //                 Session::addMessage('success', "Product added!");
+    //             }
+    //             Router::redirect('vendorproducts/index');
+    //         }
+    //     }
 
-        // Configure the view.
-        $this->view->product = $product;
-        $this->view->brands = Brands::getOptionsForForm($this->user->id);
-        $this->view->displayErrors = $product->getErrorMessages();
-        $this->view->postAction = Env::get('APP_DOMAIN', '/').'vendorproducts/add';
-        $this->view->render('vendorproducts/add');
-    }
+    //     // Configure the view.
+    //     $this->view->product = $product;
+    //     $this->view->brands = Brands::getOptionsForForm($this->user->id);
+    //     $this->view->displayErrors = $product->getErrorMessages();
+    //     $this->view->postAction = Env::get('APP_DOMAIN', '/').'vendorproducts/add';
+    //     $this->view->render('vendorproducts/add');
+    // }
 
     public function editAction($id) {
-        $product = Products::findByIdAndUserId((int)$id, (int)$this->user->id);
+        $product = ($id == 'new') ? new Products() : Products::findByIdAndUserId((int)$id, (int)$this->user->id);
 
         if(!$product) {
             Session::addMessage('danger', 'You do not have permission to edit that product.');
@@ -107,11 +108,31 @@ class VendorproductsController extends Controller {
                     ProductImages::uploadProductImage($product->id, $uploads);
                     Session::addMessage('success', "Product updated!");
                 }
+
+                $inventory = 0;
+
+                //Save options
+                if($product->hasOptions()) {
+                    $options = $_POST['options'];
+                    foreach($options as $option_id) {
+                        $ref = ProductOptionRefs::findOrCreate($product->id, $option_id);
+                        $ref->inventory = $this->request->get("inventory_" . $option_id);
+                        $ref->save();
+                        $inventory += $ref->inventory;
+                    }
+                } else {
+                    $inventory = $this->request->get('inventory');
+                }
+
+                $product->inventory = $inventory;
+                $product->save();
                 ProductImages::updateSortByProductId($product->id,  json_decode($_POST['images_sorted']));
                 Router::redirect('vendorproducts/index');
             }
         }
 
+        $this->view->options = Options::getOptionsByProductId($product->id);
+        $this->view->header = ($id == 'new') ? "Add New Product" : "Edit " . $product->name;
         $this->view->brands = Brands::getOptionsForForm($this->user->id);
         $this->view->productImages = $productImages;
         $this->view->product = $product;
@@ -203,5 +224,19 @@ class VendorproductsController extends Controller {
             }
         }
         Router::redirect('vendorproducts/options');
+    }
+
+    public function getOptionsForFormAction() {
+        $options = Options::find([
+            'conditions' => 'name LIKE ?',
+            'bind' => ['%'.$this->request->get('q').'%']
+        ]);
+        $items = [];
+        foreach($options as $option) {
+            $items[] = ['id' => $option->id, 'text' => $option->name];
+        }
+
+        $resp = ['items' => $items];
+        $this->jsonResponse($resp);
     }
 }
