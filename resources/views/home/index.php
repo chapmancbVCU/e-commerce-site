@@ -53,9 +53,9 @@
     <div class="d-flex justify-content-center align-items-center mt-3 w-100">
       <?php $disableBack = ($this->page == 1)? ' disabled="disabled"' : ''; ?>
       <?php $disableNext = ($this->page == $this->totalPages)? ' disabled="disabled"' : ''; ?>
-      <button class="btn btn-light mr-3" <?=$disableBack?> onclick="pager('back')"><i class="fas fa-chevron-left"></i></button>
+      <button class="btn btn-light me-3" <?=$disableBack?> onclick="pager('back')"><i class="fas fa-chevron-left"></i></button>
       <?=$this->page?> of <?=$this->totalPages?>
-      <button class="btn btn-light ml-3" <?=$disableNext?> onclick="pager('next')"><i class="fas fa-chevron-right"></i></button>
+      <button class="btn btn-light me-3" <?=$disableNext?> onclick="pager('next')"><i class="fas fa-chevron-right"></i></button>
     </div>
   </main>
 </div>
