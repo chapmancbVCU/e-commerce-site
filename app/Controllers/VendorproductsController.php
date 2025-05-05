@@ -105,8 +105,7 @@ class VendorproductsController extends Controller {
 
             if($product->validationPassed()) {
                 if($uploads) {
-                    ProductImages::uploadProductImage($product->id, $uploads);
-                    Session::addMessage('success', "Product updated!");
+                    ProductImages::uploadProductImage($product->id, $uploads);  
                 }
 
                 $inventory = 0;
@@ -126,6 +125,7 @@ class VendorproductsController extends Controller {
 
                 $product->inventory = $inventory;
                 $product->save();
+                Session::addMessage('success', "Product saved!");
                 ProductImages::updateSortByProductId($product->id,  json_decode($_POST['images_sorted']));
                 Router::redirect('vendorproducts/index');
             }
