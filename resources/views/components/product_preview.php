@@ -6,7 +6,12 @@
             <img src="<?=Env::get('APP_DOMAIN') . $item->url?>" alt="<?=$item->name?>">
         </div>
         <div class="cart-preview-item-info">
-            <p><?=$item->name?></p>
+            <p>
+                <?=$item->name?>
+                <?php if(!empty($item->option)): ?>
+                    <span> (<?=$item->option?>) </span>
+                <?php endif; ?>
+            </p>
             <p><?=$item->qty?> @ $<?=$item->price?></p>
             <p>Shipping: $<?=$item->shipping?></p>
         </div>

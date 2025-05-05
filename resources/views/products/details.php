@@ -59,14 +59,7 @@ use Core\Lib\Utilities\Env; ?>
         <form action="<?=Env::get('APP_DOMAIN')?>cart/addToCart/<?=$this->product->id?>" method="post">
             <?= FormHelper::csrfInput() ?>
             <?php if($this->product->hasOptions()): ?>
-                <div class="col-6 mt-2 mb-2">
-                    <select name="option_id" id="option_id" class="form-control form-control-sm">
-                        <option>-Choose Option-</option>
-                        <?php foreach($this->options as $option): ?>
-                            <option value="<?=$option->id?>"><?=$option->name?> (<?=$option->inventory?> available)</option>
-                        <?php endforeach; ?>
-                    </select>
-                </div>
+                <?= FormHelper::selectBlock('Choose Option','option_id','',$this->selectOptions,['class'=>'form-control input-sm'],['class'=>'form-group col-6'])?>
             <?php endif; ?>
             <div class="product-details-body"><?=html_entity_decode($this->product->description)?></div>
             <div>
