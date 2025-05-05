@@ -1,4 +1,15 @@
 <?php use Core\Lib\Utilities\Env; ?>
+<?php use Core\FormHelper; ?>
+<div class="row">
+    <?= FormHelper::inputBlock('file', 
+        "Upload Product Image(s)", 
+        'productImages[]', 
+        '', 
+        ['multiple' => 'multiple', 'class' => 'form-control', 'accept' => 'image/gif image/jpeg image/png'], 
+        ['class' => 'form-group mb-3'])
+    ?>
+</div>
+
 <div id="sortableImages" class="row align-items-center justify-content-start p-2">
     <?php foreach($this->productImages as $image):?>
         <div class="col flex-grow-0" id="image_<?=$image->id?>">

@@ -10,6 +10,7 @@
         <th>Name</th>
         <th>Price</th>
         <th>Shipping</th>
+        <th>Inventory</th>
         <th></th>
     </thead>
     <tbody>
@@ -18,6 +19,7 @@
                 <td><?=$product->name?></td>
                 <td><?=$product->price?></td>
                 <td><?=$product->shipping?></td>
+                <td><?=$product->inventory?></td>
                 <td class="text-end">
                     <form method="POST" 
                         action="<?=Env::get('APP_DOMAIN')?>vendorproducts/toggleFeatured" 
