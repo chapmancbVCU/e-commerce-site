@@ -120,9 +120,8 @@ class Products extends Model {
             $binds[] = "%" . $options['search'] . "%";
         }
     
-        $dbDriver = DB::getInstance()->getPDO()->getAttribute(\PDO::ATTR_DRIVER_NAME);
-        $urlColumn = ($dbDriver === 'mysql' || $dbDriver === 'mariadb') ? 'ANY_VALUE(pi.url)' : 'pi.url';
-        $brandColumn = ($dbDriver === 'mysql' || $dbDriver === 'mariadb') ? 'ANY_VALUE(brands.name)' : 'brands.name';
+        $urlColumn = Db::groupByColumn('pi.url');
+        $brandColumn = Db::groupByColumn('brands.name');
     
         $sql = "SELECT products.*, {$urlColumn} as url, {$brandColumn} as brand
             FROM products
